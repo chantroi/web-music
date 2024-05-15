@@ -1,0 +1,177 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "HTMX",
+        "importPath": "flask_htmx",
+        "description": "flask_htmx",
+        "isExtraImport": true,
+        "detail": "flask_htmx",
+        "documentation": {}
+    },
+    {
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "ForeignKey",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "isExtraImport": true,
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
+        "label": "relationship",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def home():\n    return render_template(\"index.html\")\nif __name__ == \"__main__\":\n    app.run(port=5000, debug=True)",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\n@app.route(\"/\")\ndef home():\n    return render_template(\"index.html\")\nif __name__ == \"__main__\":\n    app.run(port=5000, debug=True)",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "Author",
+        "kind": 6,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "class Author(Base):\n    __tablename__ = \"authors\"\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    books = relationship(\"Book\", back_populates=\"author\")\nclass Book(Base):\n    __tablename__ = \"books\"\n    id = Column(Integer, primary_key=True)\n    title = Column(String, nullable=False)\n    author_id = Column(Integer, ForeignKey(\"authors.id\"))",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "Book",
+        "kind": 6,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "class Book(Base):\n    __tablename__ = \"books\"\n    id = Column(Integer, primary_key=True)\n    title = Column(String, nullable=False)\n    author_id = Column(Integer, ForeignKey(\"authors.id\"))\n    author = relationship(\"Author\", back_populates=\"books\")\nclass Database:\n    def __init__(self) -> None:\n        engine = create_engine(\"sqlite:///library.db\", echo=True)\n        Base.metadata.create_all(engine)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "Database",
+        "kind": 6,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "class Database:\n    def __init__(self) -> None:\n        engine = create_engine(\"sqlite:///library.db\", echo=True)\n        Base.metadata.create_all(engine)\n        Session = sessionmaker(bind=engine)\n        self.session = Session()\n    def add_author(self, name: str) -> Author:\n        new_author = Author(name=name)\n        self.session.add(new_author)\n        self.session.commit()",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "Base = declarative_base()\nclass Author(Base):\n    __tablename__ = \"authors\"\n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    books = relationship(\"Book\", back_populates=\"author\")\nclass Book(Base):\n    __tablename__ = \"books\"\n    id = Column(Integer, primary_key=True)\n    title = Column(String, nullable=False)",
+        "detail": "test",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "test",
+        "description": "test",
+        "peekOfCode": "db = Database()\nfor v in db.get_books():\n    print(v)",
+        "detail": "test",
+        "documentation": {}
+    }
+]

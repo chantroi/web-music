@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/static/htmx.min.js"></script>
+    <script src="/static/APlayer.min.js"></script>
+    <link rel="stylesheet" href="/static/APlayer.min.css" />
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+      eruda.init();
+    </script>
+    <title>YTDL Music Player</title>
+  </head>
+  <body>
+    <nav>
+      <form id="queries">
+        <fieldset>
+          <legend></legend>
+          <div>
+            <label for=""></label>
+            <input
+              id="search-box"
+              type="text"
+              name="url"
+              placeholder="Nhap URL vao day..."
+            />
+          </div>
+          <input
+            hx-get="https://ytdl-1-j6074076.deta.app/?type=music"
+            hx-params="*"
+            hx-include="#queries"
+            type="submit"
+          />
+        </fieldset>
+      </form>
+    </nav>
+    <div id="content"></div>
+
+    <script>
+      document.addEventListener("htmx:afterOnLoad", function (event) {
+        if (
+          event.detail.xhr
+            .getResponseHeader("content-type")
+            .includes("application/json")
+        ) {
+          const responseData = JSON.parse(event.detail.xhr.responseText);
+          const url = responseData.url;
+          const title = responseData.title;
+          const thumb = responseData.thumbnail;
+          const artist = responseData.channel;
+          const player = document.querySelector("#content");
+
+          new APlayer({
+            container: player,
+            audio: [
+              {
+                name: title,
+                artist: artist,
+                url: url,
+                cover: thumb,
+              },
+            ],
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
