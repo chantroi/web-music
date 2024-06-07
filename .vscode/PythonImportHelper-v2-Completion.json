@@ -237,7 +237,7 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def update_list():\n    def update(song):\n        song.url = music(song.url)[\"url\"]\n        db.add(song)\n    songs = db.list()\n    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as ex:\n        ex.map(update, songs)\n    return songs",
+        "peekOfCode": "def update_list():\n    def update(song):\n        song.url = music(song.url)[\"url\"]\n        db.add(song)\n    songs = db.list()\n    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as ex:\n        ex.map(update, songs)\n    return songs.json()",
         "detail": "src.app",
         "documentation": {}
     },
