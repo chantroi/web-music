@@ -57,7 +57,11 @@
       function loadAlbum() {
         fetch("/list?album={{album}}")
           .then((response) => response.json())
-          .then((data) => player.list.switch(data))
+          .then(
+            (data) => player.list.remove(0),
+            player.list.add(data),
+            player.list.switch(0)
+          )
           .catch((err) => console.log(err));
       }
       document.addEventListener("htmx:afterOnLoad", function (event) {
