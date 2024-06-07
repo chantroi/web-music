@@ -33,7 +33,7 @@ def list_():
                 "theme": "#ebd0c2",
             }
             songs.append(song)
-    songs = songs.reverse()
+    songs.reverse()
     return jsonify(songs)
 
 
@@ -49,9 +49,11 @@ def add_song():
     artist = info.get("channel")
     cover = info.get("thumbnail")
     if album:
-        song = Song(name, artist, url, origin, cover, album)
+        song = Song(
+            name=name, artist=artist, url=url, origin=origin, cover=cover, album=album
+        )
     else:
-        song = Song(name, artist, url, origin, cover)
+        song = Song(name=name, artist=artist, url=url, origin=origin, cover=cover)
     return jsonify(db.add(song))
 
 
