@@ -67,4 +67,4 @@ def update_list():
     songs = db.list()
     with concurrent.futures.ThreadPoolExecutor(max_workers=100) as ex:
         ex.map(update, songs)
-    return songs.json()
+    return jsonify([song.json() for song in songs])
