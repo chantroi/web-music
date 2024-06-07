@@ -10,7 +10,7 @@ db = AlbumDB()
 
 @app.route("/")
 def home():
-    album = request.args.get("album")
+    album = request.args.get("album", "common")
     return render_template("index.html", album=album)
 
 
@@ -19,7 +19,7 @@ def list_():
     album = request.args.get("album")
     pre = None
     songs = []
-    if album and album != "all":
+    if album and album != "common":
         pre = db.list(album)
     else:
         pre = db.list()
