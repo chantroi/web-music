@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from flask_htmx import HTMX
 from .db import AlbumDB, Song
 from .ytdl import music
@@ -39,12 +39,13 @@ def list_():
 
 @app.route("/add")
 def add_song():
+    host = request.host
     origin = request.args.get("url")
     album = request.args.get("album")
     if not origin:
         return jsonify(err="no url")
     info = music(origin)
-    url = info["url"]
+    url = f'https://{host}/redi?url=info["url"]'
     name = info["title"]
     artist = info.get("channel")
     cover = info.get("thumbnail")
@@ -55,6 +56,13 @@ def add_song():
     else:
         song = Song(name=name, artist=artist, url=url, origin=origin, cover=cover)
     return jsonify(db.add(song))
+
+
+@app.route("/redi")
+def redirect_():
+    url = request.args.get("url")
+    info = music(url)
+    return redirect(info["url"])
 
 
 if __name__ == "__main__":

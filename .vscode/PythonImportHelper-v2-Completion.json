@@ -145,6 +145,14 @@
         "documentation": {}
     },
     {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "HTMX",
         "importPath": "flask_htmx",
         "description": "flask_htmx",
@@ -219,7 +227,16 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def add_song():\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\")\n    if not origin:\n        return jsonify(err=\"no url\")\n    info = music(origin)\n    url = info[\"url\"]\n    name = info[\"title\"]\n    artist = info.get(\"channel\")\n    cover = info.get(\"thumbnail\")",
+        "peekOfCode": "def add_song():\n    host = request.host\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\")\n    if not origin:\n        return jsonify(err=\"no url\")\n    info = music(origin)\n    url = f'https://{host}/redi?url=info[\"url\"]'\n    name = info[\"title\"]\n    artist = info.get(\"channel\")",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "redirect_",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def redirect_():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return redirect(info[\"url\"])\nif __name__ == \"__main__\":\n    app.run(port=5000, debug=True)",
         "detail": "src.app",
         "documentation": {}
     },
