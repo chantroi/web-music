@@ -57,10 +57,10 @@
       function loadAlbum() {
         fetch("/list?album={{album}}")
           .then((response) => response.json())
-          .then(
-            (data) => player.list.remove(0),
-            player.list.add(data),
-            player.list.switch(0)
+          .then((data) =>
+            data.forEach((song) => {
+              player.list.add(song);
+            })
           )
           .catch((err) => console.log(err));
       }
