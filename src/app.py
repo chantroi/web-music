@@ -64,6 +64,3 @@ def redirect_():
     info = music(url)
     return redirect(info["url"])
 
-
-if __name__ == "__main__":
-    app.run(port=5000, debug=True)

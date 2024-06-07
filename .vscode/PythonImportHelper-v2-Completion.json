@@ -236,7 +236,7 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def redirect_():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return redirect(info[\"url\"])\nif __name__ == \"__main__\":\n    app.run(port=5000, debug=True)",
+        "peekOfCode": "def redirect_():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return redirect(info[\"url\"])",
         "detail": "src.app",
         "documentation": {}
     },
