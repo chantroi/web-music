@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_htmx import HTMX
-from db import AlbumDB, Song
-from ytdl import music
+from .db import AlbumDB, Song
+from .ytdl import music
 
 app = Flask(__name__)
 HTMX(app)

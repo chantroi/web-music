@@ -153,30 +153,6 @@
         "documentation": {}
     },
     {
-        "label": "AlbumDB",
-        "importPath": "db",
-        "description": "db",
-        "isExtraImport": true,
-        "detail": "db",
-        "documentation": {}
-    },
-    {
-        "label": "Song",
-        "importPath": "db",
-        "description": "db",
-        "isExtraImport": true,
-        "detail": "db",
-        "documentation": {}
-    },
-    {
-        "label": "music",
-        "importPath": "ytdl",
-        "description": "ytdl",
-        "isExtraImport": true,
-        "detail": "ytdl",
-        "documentation": {}
-    },
-    {
         "label": "yt_dlp",
         "kind": 6,
         "isExtraImport": true,
