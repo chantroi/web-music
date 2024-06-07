@@ -246,7 +246,7 @@
         "kind": 5,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\ndb = AlbumDB()\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None",
+        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\ndb = AlbumDB()\n@app.route(\"/\")\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")",
         "detail": "src.app",
         "documentation": {}
     },
@@ -255,7 +255,7 @@
         "kind": 5,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "db = AlbumDB()\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"common\":",
+        "peekOfCode": "db = AlbumDB()\n@app.route(\"/\")\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []",
         "detail": "src.app",
         "documentation": {}
     },

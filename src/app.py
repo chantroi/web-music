@@ -9,6 +9,7 @@ HTMX(app)
 db = AlbumDB()
 
 
+@app.route("/")
 @app.route("/<album>")
 def home(album="common"):
     return render_template("index.html", album=album)
