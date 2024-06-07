@@ -113,6 +113,15 @@
         "documentation": {}
     },
     {
+        "label": "concurrent.futures",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "concurrent.futures",
+        "description": "concurrent.futures",
+        "detail": "concurrent.futures",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -138,14 +147,6 @@
     },
     {
         "label": "jsonify",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "redirect",
         "importPath": "flask",
         "description": "flask",
         "isExtraImport": true,
@@ -209,7 +210,7 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def home():\n    album = request.args.get(\"album\", \"common\")\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"common\":\n        pre = db.list(album)",
+        "peekOfCode": "def home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"common\":\n        pre = db.list(album)\n    else:",
         "detail": "src.app",
         "documentation": {}
     },
@@ -227,16 +228,16 @@
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def add_song():\n    host = request.host\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\")\n    if not origin:\n        return jsonify(err=\"no url\")\n    info = music(origin)\n    url = f'https://{host}/redi?url=info[\"url\"]'\n    name = info[\"title\"]\n    artist = info.get(\"channel\")",
+        "peekOfCode": "def add_song():\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\")\n    if not origin:\n        return jsonify(err=\"no url\")\n    info = music(origin)\n    url = info[\"url\"]\n    name = info[\"title\"]\n    artist = info.get(\"channel\")\n    cover = info.get(\"thumbnail\")",
         "detail": "src.app",
         "documentation": {}
     },
     {
-        "label": "redirect_",
+        "label": "update_list",
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def redirect_():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return redirect(info[\"url\"])",
+        "peekOfCode": "def update_list():\n    def update(song):\n        song.url = music(song.url)[\"url\"]\n        db.add(song)\n    songs = db.list()\n    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as ex:\n        ex.map(update, songs)\n    return songs",
         "detail": "src.app",
         "documentation": {}
     },
@@ -245,7 +246,7 @@
         "kind": 5,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\ndb = AlbumDB()\n@app.route(\"/\")\ndef home():\n    album = request.args.get(\"album\", \"common\")\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")",
+        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\ndb = AlbumDB()\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None",
         "detail": "src.app",
         "documentation": {}
     },
@@ -254,7 +255,7 @@
         "kind": 5,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "db = AlbumDB()\n@app.route(\"/\")\ndef home():\n    album = request.args.get(\"album\", \"common\")\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []",
+        "peekOfCode": "db = AlbumDB()\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"common\":",
         "detail": "src.app",
         "documentation": {}
     },

@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, jsonify, redirect
+import concurrent.futures
+from flask import Flask, render_template, request, jsonify
 from flask_htmx import HTMX
 from .db import AlbumDB, Song
 from .ytdl import music
@@ -8,9 +9,8 @@ HTMX(app)
 db = AlbumDB()
 
 
-@app.route("/")
-def home():
-    album = request.args.get("album", "common")
+@app.route("/<album>")
+def home(album="common"):
     return render_template("index.html", album=album)
 
 
@@ -39,13 +39,12 @@ def list_():
 
 @app.route("/add")
 def add_song():
-    host = request.host
     origin = request.args.get("url")
     album = request.args.get("album")
     if not origin:
         return jsonify(err="no url")
     info = music(origin)
-    url = f'https://{host}/redi?url=info["url"]'
+    url = info["url"]
     name = info["title"]
     artist = info.get("channel")
     cover = info.get("thumbnail")
@@ -58,9 +57,13 @@ def add_song():
     return jsonify(db.add(song))
 
 
-@app.route("/redi")
-def redirect_():
-    url = request.args.get("url")
-    info = music(url)
-    return redirect(info["url"])
+@app.route("/update")
+def update_list():
+    def update(song):
+        song.url = music(song.url)["url"]
+        db.add(song)
 
+    songs = db.list()
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as ex:
+        ex.map(update, songs)
+    return songs
