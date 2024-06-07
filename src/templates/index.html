@@ -27,7 +27,7 @@
             />
           </div>
           <input
-            hx-get="https://ytdl-1-j6074076.deta.app/?type=music"
+            hx-get="/add"
             hx-params="*"
             hx-include="#queries"
             type="submit"
@@ -35,48 +35,35 @@
         </fieldset>
       </form>
     </nav>
-    <div>
-      <br />
-      <i>Chào mừng bạn đến với trình phát nhạc web</i>
-      <i
-        >Bạn có thể phát nhạc hoặc tải nhạc từ Youtube và một số nền tảng khác
-        ngay từ web
-      </i>
-      <i
-        >Để bắt đầu sử dụng, hãy sao chép link gốc và dán vào ô bên trên và ấn
-        nút gửi</i
-      >
-      <br />
-    </div>
-    <div id="content"></div>
+    <div id="player"></div>
 
     <script>
+      function loadAlbum() {
+        fetch("/list?album={{album}}")
+          .then((response) => response.json())
+          .then(
+            (data) =>
+              new APlayer({
+                container: document.getElementById("player"),
+                mini: false,
+                autoplay: false,
+                theme: "#FADFA3",
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.7,
+                mutex: true,
+                listFolded: false,
+                listMaxHeight: 90,
+                lrcType: 3,
+                audio: data,
+              })
+          )
+          .catch((err) => console.log(err));
+      }
       document.addEventListener("htmx:afterOnLoad", function (event) {
-        if (
-          event.detail.xhr
-            .getResponseHeader("content-type")
-            .includes("application/json")
-        ) {
-          const responseData = JSON.parse(event.detail.xhr.responseText);
-          const url = responseData.url;
-          const title = responseData.title;
-          const thumb = responseData.thumbnail;
-          const artist = responseData.channel;
-          const player = document.querySelector("#content");
-
-          new APlayer({
-            container: player,
-            audio: [
-              {
-                name: title,
-                artist: artist,
-                url: url,
-                cover: thumb,
-              },
-            ],
-          });
-          document.querySelector("#search-box").value = "";
-        }
+        loadAlbum();
+        document.querySelector("#search-box").value = "";
       });
     </script>
   </body>

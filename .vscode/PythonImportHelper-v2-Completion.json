@@ -1,50 +1,43 @@
 [
     {
-        "label": "Flask",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "os",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "flask",
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
         "documentation": {}
     },
     {
-        "label": "render_template",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "create_engine",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
         "isExtraImport": true,
-        "detail": "flask",
+        "detail": "sqlalchemy",
         "documentation": {}
     },
     {
-        "label": "request",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "Column",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
         "isExtraImport": true,
-        "detail": "flask",
+        "detail": "sqlalchemy",
         "documentation": {}
     },
     {
-        "label": "jsonify",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "Integer",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
         "isExtraImport": true,
-        "detail": "flask",
+        "detail": "sqlalchemy",
         "documentation": {}
     },
     {
-        "label": "Response",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "String",
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
         "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "HTMX",
-        "importPath": "flask_htmx",
-        "description": "flask_htmx",
-        "isExtraImport": true,
-        "detail": "flask_htmx",
+        "detail": "sqlalchemy",
         "documentation": {}
     },
     {
@@ -88,11 +81,19 @@
         "documentation": {}
     },
     {
-        "label": "declarative_base",
-        "importPath": "sqlalchemy.ext.declarative",
-        "description": "sqlalchemy.ext.declarative",
+        "label": "sessionmaker",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
         "isExtraImport": true,
-        "detail": "sqlalchemy.ext.declarative",
+        "detail": "sqlalchemy.orm",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.orm",
+        "description": "sqlalchemy.orm",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.orm",
         "documentation": {}
     },
     {
@@ -112,11 +113,137 @@
         "documentation": {}
     },
     {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "HTMX",
+        "importPath": "flask_htmx",
+        "description": "flask_htmx",
+        "isExtraImport": true,
+        "detail": "flask_htmx",
+        "documentation": {}
+    },
+    {
+        "label": "AlbumDB",
+        "importPath": "db",
+        "description": "db",
+        "isExtraImport": true,
+        "detail": "db",
+        "documentation": {}
+    },
+    {
+        "label": "Song",
+        "importPath": "db",
+        "description": "db",
+        "isExtraImport": true,
+        "detail": "db",
+        "documentation": {}
+    },
+    {
+        "label": "music",
+        "importPath": "ytdl",
+        "description": "ytdl",
+        "isExtraImport": true,
+        "detail": "ytdl",
+        "documentation": {}
+    },
+    {
+        "label": "yt_dlp",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yt_dlp",
+        "description": "yt_dlp",
+        "detail": "yt_dlp",
+        "documentation": {}
+    },
+    {
+        "label": "declarative_base",
+        "importPath": "sqlalchemy.ext.declarative",
+        "description": "sqlalchemy.ext.declarative",
+        "isExtraImport": true,
+        "detail": "sqlalchemy.ext.declarative",
+        "documentation": {}
+    },
+    {
+        "label": "AlbumDB",
+        "kind": 6,
+        "importPath": "src.db.client",
+        "description": "src.db.client",
+        "peekOfCode": "class AlbumDB:\n    def __init__(self) -> None:\n        db_url = os.environ[\"DB_URL\"]\n        engine = create_engine(db_url)\n        Base.metadata.create_all(engine)\n        Session = sessionmaker(bind=engine)\n        self.session = Session()\n    def add(self, song: Song) -> dict:\n        self.session.merge(song)\n        self.session.commit()",
+        "detail": "src.db.client",
+        "documentation": {}
+    },
+    {
+        "label": "Song",
+        "kind": 6,
+        "importPath": "src.db.model",
+        "description": "src.db.model",
+        "peekOfCode": "class Song(Base):\n    __tablename__ = \"songs\"\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    artist = Column(String, nullable=True)\n    url = Column(String)\n    origin = Column(String)\n    cover = Column(String, nullable=True)\n    album = Column(String, default=\"common\")\n    def json(self) -> dict:",
+        "detail": "src.db.model",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 5,
+        "importPath": "src.db.model",
+        "description": "src.db.model",
+        "peekOfCode": "Base = declarative_base()\nclass Song(Base):\n    __tablename__ = \"songs\"\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    artist = Column(String, nullable=True)\n    url = Column(String)\n    origin = Column(String)\n    cover = Column(String, nullable=True)\n    album = Column(String, default=\"common\")",
+        "detail": "src.db.model",
+        "documentation": {}
+    },
+    {
         "label": "home",
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def home():\n    return render_template(\"index.html\")\nif __name__ == \"__main__\":\n    app.run(port=5000, debug=True)",
+        "peekOfCode": "def home():\n    album = request.args.get(\"album\")\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"all\":\n        pre = db.list(album)",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "list_",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"all\":\n        pre = db.list(album)\n    else:\n        pre = db.list()\n    if pre:\n        for song in pre:",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "add_song",
+        "kind": 2,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "def add_song():\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\")\n    if not origin:\n        return jsonify(err=\"no url\")\n    info = music(origin)\n    url = info[\"url\"]\n    name = info[\"title\"]\n    artist = info.get(\"channel\")\n    cover = info.get(\"thumbnail\")",
         "detail": "src.app",
         "documentation": {}
     },
@@ -125,8 +252,26 @@
         "kind": 5,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\n@app.route(\"/\")\ndef home():\n    return render_template(\"index.html\")\nif __name__ == \"__main__\":\n    app.run(port=5000, debug=True)",
+        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\ndb = AlbumDB()\n@app.route(\"/\")\ndef home():\n    album = request.args.get(\"album\")\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")",
         "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "src.app",
+        "description": "src.app",
+        "peekOfCode": "db = AlbumDB()\n@app.route(\"/\")\ndef home():\n    album = request.args.get(\"album\")\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []",
+        "detail": "src.app",
+        "documentation": {}
+    },
+    {
+        "label": "music",
+        "kind": 2,
+        "importPath": "src.ytdl",
+        "description": "src.ytdl",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict",
+        "detail": "src.ytdl",
         "documentation": {}
     },
     {
