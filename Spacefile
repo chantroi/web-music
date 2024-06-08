@@ -1,0 +1,12 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+  - name: web-music
+    src: ./src/server
+    engine: python3.9
+    primary: true
+    public: true
+    presets:
+      env:
+        - name: DETA_KEY
+          default: c0a1xmuzlhz_9ukoxqAYL8nr8w9hPai2kPbyf7qnAaGC

@@ -25,7 +25,7 @@
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
     </script>
-    <title>YTDL Music Player</title>
+    <title>Common Media</title>
   </head>
   <body onload="loadAlbum()">
     <nav>
@@ -58,6 +58,7 @@
       const albumInput = document.querySelector("#album");
       const Album = urlParams.get("a") || "common";
       albumInput.value = Album;
+      document.title = Album;
       function loadAlbum() {
         fetch(`https://webmusic-1-p4975053.deta.app/album?album=${Album}`)
           .then((response) => response.json())
