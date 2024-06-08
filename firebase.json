@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "ymusic",
+    "site": "amnhac",
     "public": "src/frontend",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }
