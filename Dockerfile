@@ -1,9 +1,11 @@
 FROM python:3.10
 
-WORKDIR /bot
-COPY . /bot
+RUN useradd -m -u 1000 user
+COPY . /home/user/bot
+WORKDIR /home/user/bot
 
 RUN pip install -r requirements.txt
+RUN chown -R user:user /home/user/bot
 WORKDIR /bot/src/server
 EXPOSE 8080
 
