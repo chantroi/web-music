@@ -58,21 +58,7 @@ def add_song():
     return jsonify(db.add(song))
 
 
-@app.route("/update")
-def update_list():
-    def update(song):
-        url = music(song.origin)["url"]
-        song = Song(
-            name=song.name,
-            artist=song.artist,
-            url=url,
-            origin=song,
-            cover=song.cover,
-            album=song.album,
-        )
-        db.add(song)
-
-    songs = db.list()
-    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as ex:
-        ex.map(update, songs)
-    return jsonify([song.json() for song in songs])
+@app.route("/delete")
+def delete_song():
+    song_id = request.args.get("id")
+    

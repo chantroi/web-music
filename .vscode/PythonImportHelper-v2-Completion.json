@@ -113,6 +113,15 @@
         "documentation": {}
     },
     {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
         "label": "concurrent.futures",
         "kind": 6,
         "isExtraImport": true,
@@ -154,6 +163,38 @@
         "documentation": {}
     },
     {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "HTMX",
         "importPath": "flask_htmx",
         "description": "flask_htmx",
@@ -168,6 +209,38 @@
         "importPath": "yt_dlp",
         "description": "yt_dlp",
         "detail": "yt_dlp",
+        "documentation": {}
+    },
+    {
+        "label": "Deta",
+        "importPath": "deta",
+        "description": "deta",
+        "isExtraImport": true,
+        "detail": "deta",
+        "documentation": {}
+    },
+    {
+        "label": "CORS",
+        "importPath": "flask_cors",
+        "description": "flask_cors",
+        "isExtraImport": true,
+        "detail": "flask_cors",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "importPath": "detastore",
+        "description": "detastore",
+        "isExtraImport": true,
+        "detail": "detastore",
+        "documentation": {}
+    },
+    {
+        "label": "Drive",
+        "importPath": "detastore",
+        "description": "detastore",
+        "isExtraImport": true,
+        "detail": "detastore",
         "documentation": {}
     },
     {
@@ -206,6 +279,15 @@
         "documentation": {}
     },
     {
+        "label": "Drive",
+        "kind": 6,
+        "importPath": "src.drive.client",
+        "description": "src.drive.client",
+        "peekOfCode": "class Drive:\n    def __init__(self) -> None:\n        self.url = os.environ[\"DRIVE\"]\n    def get(self, album: str = \"common\") -> str:\n        req = requests.get(self.url, params={\"album\": album}, timeout=20)\n        res = req.json()\n        return res[\"list\"]\n    def put(self, file: dict) -> None:\n        requests.post(self.url, json=file, timeout=20)\n    def delete(self, filename: str) -> None:",
+        "detail": "src.drive.client",
+        "documentation": {}
+    },
+    {
         "label": "home",
         "kind": 2,
         "importPath": "src.app",
@@ -233,11 +315,11 @@
         "documentation": {}
     },
     {
-        "label": "update_list",
+        "label": "delete_song",
         "kind": 2,
         "importPath": "src.app",
         "description": "src.app",
-        "peekOfCode": "def update_list():\n    def update(song):\n        url = music(song.origin)[\"url\"]\n        song = Song(\n            name=song.name,\n            artist=song.artist,\n            url=url,\n            origin=song,\n            cover=song.cover,\n            album=song.album,",
+        "peekOfCode": "def delete_song():\n    song_id = request.args.get(\"id\")",
         "detail": "src.app",
         "documentation": {}
     },
@@ -266,6 +348,105 @@
         "description": "src.ytdl",
         "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict",
         "detail": "src.ytdl",
+        "documentation": {}
+    },
+    {
+        "label": "Base",
+        "kind": 6,
+        "importPath": "src-v2.server.detastore.base",
+        "description": "src-v2.server.detastore.base",
+        "peekOfCode": "class Base:\n    def __init__(self, album: str = \"common\"):\n        self.album = album\n        self.b = deta.Base(\"music\")\n    def put(\n        self,\n        filename: str,\n        artist: str = None,\n        cover: str = None,\n    ) -> None:",
+        "detail": "src-v2.server.detastore.base",
+        "documentation": {}
+    },
+    {
+        "label": "deta",
+        "kind": 5,
+        "importPath": "src-v2.server.detastore.client",
+        "description": "src-v2.server.detastore.client",
+        "peekOfCode": "deta = Deta(os.environ[\"DETA_KEY\"])",
+        "detail": "src-v2.server.detastore.client",
+        "documentation": {}
+    },
+    {
+        "label": "Drive",
+        "kind": 6,
+        "importPath": "src-v2.server.detastore.drive",
+        "description": "src-v2.server.detastore.drive",
+        "peekOfCode": "class Drive:\n    def __init__(self) -> None:\n        self.d = deta.Drive(\"music\")\n    def put(self, filename: str, data: bytes):\n        if self.get(filename):\n            return\n        self.d.put(filename, data, content_type=\"audio/mpeg\")\n    def get(self, filename: str):\n        file = self.d.get(filename)\n        if file:",
+        "detail": "src-v2.server.detastore.drive",
+        "documentation": {}
+    },
+    {
+        "label": "music",
+        "kind": 2,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef get_bytes(url: str) -> bytes:\n    return requests.get(url, timeout=20).content\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")",
+        "detail": "src-v2.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "get_bytes",
+        "kind": 2,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "def get_bytes(url: str) -> bytes:\n    return requests.get(url, timeout=20).content\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")\n@app.route(\"/put\")\ndef put_music():\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\", \"common\")\n    info = music(origin)",
+        "detail": "src-v2.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "def home():\n    return jsonify(page=\"home\")\n@app.route(\"/put\")\ndef put_music():\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\", \"common\")\n    info = music(origin)\n    url = info[\"url\"]\n    name = info[\"title\"]\n    artist = info.get(\"channel\")",
+        "detail": "src-v2.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "put_music",
+        "kind": 2,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "def put_music():\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\", \"common\")\n    info = music(origin)\n    url = info[\"url\"]\n    name = info[\"title\"]\n    artist = info.get(\"channel\")\n    cover = info.get(\"thumbnail\")\n    data = get_bytes(url)\n    base = Base(album=album)",
+        "detail": "src-v2.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "get_album",
+        "kind": 2,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "def get_album():\n    album = request.args.get(\"album\", \"common\")\n    app_url = request.url\n    base = Base(album=album)\n    songs = []\n    for song in base.list():\n        url = f\"{app_url}/play/{song['name']}\"\n        song = {\n            \"name\": song[\"name\"],\n            \"artist\": song[\"artist\"],",
+        "detail": "src-v2.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "play_music",
+        "kind": 2,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "def play_music(songname):\n    drive = Drive()\n    data = drive.get(songname)\n    return Response(data, content_type=\"audio/mpeg\")\n@app.route(\"/delete\")\ndef delete_music():\n    songname = request.args.get(\"name\")\n    album = request.args.get(\"album\")\n    base = Base(album)\n    base.delete(songname)",
+        "detail": "src-v2.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "delete_music",
+        "kind": 2,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "def delete_music():\n    songname = request.args.get(\"name\")\n    album = request.args.get(\"album\")\n    base = Base(album)\n    base.delete(songname)\n    return jsonify(status=\"success\")\nif __name__ == \"__main__\":\n    app.run(port=8080)",
+        "detail": "src-v2.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "src-v2.server.main",
+        "description": "src-v2.server.main",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef get_bytes(url: str) -> bytes:\n    return requests.get(url, timeout=20).content\n@app.route(\"/\")",
+        "detail": "src-v2.server.main",
         "documentation": {}
     },
     {
