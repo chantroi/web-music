@@ -76,7 +76,7 @@
           </div>
           <button
             class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
-            hx-get="https://yubox.vercel.app/album/add"
+            hx-get="https://webmusic1-se5r0bbh.b4a.run/album/add"
             hx-params="*"
             hx-include="#queries"
             type="submit"
@@ -96,7 +96,7 @@
     </div>
 
     <script>
-      const Api = "https://yubox.vercel.app";
+      const Api = "https://webmusic1-se5r0bbh.b4a.run";
       const urlParams = new URLSearchParams(window.location.search);
       const albumInput = document.querySelector("#album");
       const Album = urlParams.get("a") || "common";
