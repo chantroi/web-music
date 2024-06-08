@@ -7,51 +7,82 @@
     <script src="/static/APlayer.min.js"></script>
     <link rel="stylesheet" href="/static/APlayer.min.css" />
     <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
       eruda.init();
     </script>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+
       const firebaseConfig = {
-        apiKey: "AIzaSyAqFMOecMURBSOO3zybK4GSWl1GZZMl14A",
-        authDomain: "project-5ea56.firebaseapp.com",
-        projectId: "project-5ea56",
-        storageBucket: "project-5ea56.appspot.com",
-        messagingSenderId: "927424247356",
-        appId: "1:927424247356:web:b2ffbc3fe237f87cbc7539",
-        measurementId: "G-KSVDB2REKM",
+        apiKey: "AIzaSyBTfcduj_9mihroN-a4mW_H6HUEc__JJeA",
+        authDomain: "ytm-media.firebaseapp.com",
+        projectId: "ytm-media",
+        storageBucket: "ytm-media.appspot.com",
+        messagingSenderId: "853099182755",
+        appId: "1:853099182755:web:9ba0f8099452387be89d16",
+        measurementId: "G-B3CDDL4LSW",
       };
+
       const app = initializeApp(firebaseConfig);
       const analytics = getAnalytics(app);
     </script>
+    <style>
+      body {
+        background-color: white;
+        color: black;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: black;
+          color: white;
+        }
+      }
+    </style>
     <title>Common Media</title>
   </head>
   <body onload="loadAlbum()">
     <nav>
-      <form id="queries">
-        <fieldset>
-          <legend></legend>
-          <div>
-            <label for=""></label>
+      <div class="nav-wrapper">
+        <form id="queries">
+          <div class="input-field">
             <input
               id="search-box"
               type="text"
               name="url"
-              placeholder="Nhap URL vao day..."
+              placeholder="URL....."
             />
+            <label class="label-icon" for="search"
+              ><i class="material-icons">search</i></label
+            >
+            <i class="material-icons">close</i>
             <input id="album" type="hidden" name="album" value="common" />
           </div>
-          <input
+          <button
+            class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
             hx-get="https://yubox.vercel.app/album/add"
             hx-params="*"
             hx-include="#queries"
             type="submit"
-          />
-        </fieldset>
-      </form>
+          >
+            <i class="material-icons right">Xong</i>
+          </button>
+        </form>
+      </div>
     </nav>
-    <div id="player"></div>
+    <br /><br />
+    <div class="row">
+      <div class="col s12 m7">
+        <div class="card">
+          <div id="player"></div>
+        </div>
+      </div>
+    </div>
 
     <script>
       const Api = "https://yubox.vercel.app";

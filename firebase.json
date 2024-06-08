@@ -1,10 +1,7 @@
 {
   "hosting": {
+    "site": "ymusic",
     "public": "src/frontend",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
   }
 }
