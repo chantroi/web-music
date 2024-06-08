@@ -1,7 +1,7 @@
 FROM python
 
 COPY requirements.txt .
-COPY ./bot/src/server/* .
+COPY ./src/server/* .
 
 RUN pip install -r requirements.txt
 EXPOSE 8080
