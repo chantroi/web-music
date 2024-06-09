@@ -46,7 +46,7 @@ def update_album():
 
 @app.route("/album/get")
 def get_album():
-    name = request.args.get("album", "common")
+    name = request.args.get("album")
     return jsonify(album.list(name))
 
 
