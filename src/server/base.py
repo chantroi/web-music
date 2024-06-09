@@ -13,6 +13,8 @@ class Album:
     def put(self, name: str, url: str):
         album = self.get(name)
         if album:
+            if url in self.list(name):
+                return
             album["list"].append(url)
         else:
             album = dict(key=name, list=[url])
