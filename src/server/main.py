@@ -1,7 +1,7 @@
 import yt_dlp
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from .base import Album
+from base import Album
 
 app = Flask(__name__)
 CORS(app)

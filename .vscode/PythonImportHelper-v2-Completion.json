@@ -220,6 +220,14 @@
         "documentation": {}
     },
     {
+        "label": "Album",
+        "importPath": "base",
+        "description": "base",
+        "isExtraImport": true,
+        "detail": "base",
+        "documentation": {}
+    },
+    {
         "label": "declarative_base",
         "importPath": "sqlalchemy.ext.declarative",
         "description": "sqlalchemy.ext.declarative",
