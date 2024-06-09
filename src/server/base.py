@@ -28,3 +28,7 @@ class Album:
         album = self.get(name)
         album["list"].remove(url)
         return self.db.put(album)
+
+    def albums(self):
+        all_album = self.db.fetch()
+        return all_album.items

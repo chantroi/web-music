@@ -376,7 +376,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def get_album():\n    album = Album()\n    name = request.args.get(\"album\")\n    return jsonify(album.list(name))\n@app.route(\"/album/delete\")\ndef delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)",
+        "peekOfCode": "def get_album():\n    album = Album()\n    name = request.args.get(\"album\")\n    return jsonify(album=dict(name=name, list=album.list(name)), all=album.albums())\n@app.route(\"/album/delete\")\ndef delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)",
         "detail": "src.server.main",
         "documentation": {}
     },
