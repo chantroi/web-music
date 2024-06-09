@@ -11,6 +11,10 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script>
       eruda.init();
@@ -64,28 +68,40 @@
     <title>Common Media</title>
   </head>
   <body onload="loadAlbum()">
-    <nav>
+    <nav class="nav-extended">
       <div class="nav-wrapper">
-        <form id="queries">
-          <div class="input-field">
-            <input id="search-box" type="text" name="url" />
-            <label class="label-icon" for="search"
-              ><i class="material-icons">URL.....</i></label
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
+          ><i class="material-icons">menu</i></a
+        >
+        <fieldset>
+          <form id="queries">
+            <div class="input-field">
+              <input id="search-box" type="text" name="url" />
+
+              <label class="label-icon" for="search-box"
+                ><i class="material-icons">search</i></label
+              >
+              <input
+                id="album"
+                type="hidden"
+                name="album"
+                value="Web Âm Nhạc"
+              />
+            </div>
+            <button
+              class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
+              hx-get="https://collection.serv00.net/album/add"
+              hx-params="*"
+              hx-include="#queries"
+              type="submit"
             >
-            <input id="album" type="hidden" name="album" value="Web Âm Nhạc" />
-          </div>
-          <button
-            class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
-            hx-get="https://collection.serv00.net/album/add"
-            hx-params="*"
-            hx-include="#queries"
-            type="submit"
-          >
-            <i class="material-icons right">Add</i>
-          </button>
-        </form>
+              <i class="material-icons">add</i>
+            </button>
+          </form>
+        </fieldset>
       </div>
     </nav>
+    <ul class="sidenav" id="mobile-demo"></ul>
     <br /><br />
     <div class="row">
       <div class="col s12 m7">
@@ -95,49 +111,6 @@
       </div>
     </div>
 
-    <script>
-      const Api = "https://collection.serv00.net";
-      const urlParams = new URLSearchParams(window.location.search);
-      const albumInput = document.querySelector("#album");
-      const Album = urlParams.get("a") || "Web Âm Nhạc";
-      albumInput.value = Album;
-      document.title = Album;
-      const ap = new APlayer({
-        container: document.getElementById("player"),
-        mini: false,
-        autoplay: true,
-        theme: "#FADFA3",
-        preload: "auto",
-        volume: 0.7,
-        mutex: true,
-        listFolded: false,
-        listMaxHeight: 90,
-        lrcType: 3,
-        audio: [],
-      });
-      function loadPlayer(data) {
-        data.forEach((link) => {
-          fetch(`${Api}/get?url=${link}`)
-            .then((response) => response.json())
-            .then((data) => ap.list.add([data]))
-            .catch((err) => console.log(err));
-        });
-      }
-      function loadAlbum() {
-        fetch(`${Api}/album/get?album=${Album}`)
-          .then((response) => response.json())
-          .then((data) => loadPlayer(data))
-          .catch((err) => console.log(err));
-      }
-      document.addEventListener("htmx:afterOnLoad", function (event) {
-        const link = document.querySelector("#search-box").value;
-        fetch(`${Api}/get?url=${link}`)
-          .then((response) => response.json())
-          .then((data) => ap.list.add([data]))
-          .catch((err) => console.log(err));
-
-        document.querySelector("#search-box").value = "";
-      });
-    </script>
+    <script src="/script.js"></script>
   </body>
 </html>
