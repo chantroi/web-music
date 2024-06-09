@@ -367,7 +367,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def update_album():\n    name = request.args.get(\"album\")\n    url = request.args.get(\"url\")\n    album.put(name, url)\n    return jsonify(status=\"success\")\n@app.route(\"/album/get\")\ndef get_album():\n    name = request.args.get(\"album\")\n    return jsonify(album.list(name))\n@app.route(\"/album/delete\")",
+        "peekOfCode": "def update_album():\n    album = Album()\n    name = request.args.get(\"album\")\n    url = request.args.get(\"url\")\n    album.put(name, url)\n    return jsonify(status=\"success\")\n@app.route(\"/album/get\")\ndef get_album():\n    album = Album()\n    name = request.args.get(\"album\")",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -376,7 +376,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def get_album():\n    name = request.args.get(\"album\")\n    return jsonify(album.list(name))\n@app.route(\"/album/delete\")\ndef delete_music():\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\")",
+        "peekOfCode": "def get_album():\n    album = Album()\n    name = request.args.get(\"album\")\n    return jsonify(album.list(name))\n@app.route(\"/album/delete\")\ndef delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -385,7 +385,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def delete_music():\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\")",
+        "peekOfCode": "def delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\")",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -394,16 +394,7 @@
         "kind": 5,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "app = Flask(__name__)\nCORS(app)\nalbum = Album()\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\n@app.route(\"/\")\ndef home():",
-        "detail": "src.server.main",
-        "documentation": {}
-    },
-    {
-        "label": "album",
-        "kind": 5,
-        "importPath": "src.server.main",
-        "description": "src.server.main",
-        "peekOfCode": "album = Album()\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")\n@app.route(\"/get\")",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")",
         "detail": "src.server.main",
         "documentation": {}
     },

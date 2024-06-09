@@ -9,7 +9,6 @@ except:
 
 app = Flask(__name__)
 CORS(app)
-album = Album()
 
 
 def music(video_url):
@@ -38,6 +37,7 @@ def get_music():
 
 @app.route("/album/add")
 def update_album():
+    album = Album()
     name = request.args.get("album")
     url = request.args.get("url")
     album.put(name, url)
@@ -46,12 +46,14 @@ def update_album():
 
 @app.route("/album/get")
 def get_album():
+    album = Album()
     name = request.args.get("album")
     return jsonify(album.list(name))
 
 
 @app.route("/album/delete")
 def delete_music():
+    album = Album()
     url = request.args.get("url")
     name = request.args.get("album")
     album.delete(name, url)
