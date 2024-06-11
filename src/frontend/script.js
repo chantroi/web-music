@@ -14,14 +14,14 @@ const ap = new APlayer({
   preload: "auto",
   volume: 1,
   mutex: true,
-  listFolded: true,
+  listFolded: false,
   listMaxHeight: 90,
   lrcType: 3,
   audio: [],
 });
 
 function loadPlayer(album) {
-  album.list.forEach((link) => {
+  album.forEach((link) => {
     fetch(`${Api}/get?url=${link}`)
       .then((response) => response.json())
       .then((data) => ap.list.add([data]))
@@ -32,16 +32,14 @@ function loadPlayer(album) {
 function loadAlbum() {
   fetch(`${Api}/album/get`)
     .then((response) => response.json())
-    .then(
-      (data) =>
-        function () {
-          loadSideNav(data);
-          data.forEach((album) => {
-            if (Album === album.key) {
-              loadPlayer(album);
-            }
-          });
+    .then((data) =>
+      data.forEach((album) => {
+        if (Album === album.key) {
+          loadPlayer(album.list);
+        } else {
+          console.log(album.key);
         }
+      })
     )
     .catch((err) => console.log(err));
 }
