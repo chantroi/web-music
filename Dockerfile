@@ -7,7 +7,7 @@ COPY . .
 RUN pip install -r requirements.txt
 
 EXPOSE 8080
-RUN chown -R user:user /home/user/content
+RUN chown -R user:user /home/user/app
 WORKDIR $HOME/src/server
 
 USER user
