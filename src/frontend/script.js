@@ -1,4 +1,3 @@
-const Api = "https://collection.serv00.net";
 const urlParams = new URLSearchParams(window.location.search);
 const albumInput = document.querySelector("#album");
 const Album = urlParams.get("a") || "Web Âm Nhạc";
@@ -22,7 +21,7 @@ const ap = new APlayer({
 
 function loadPlayer(album) {
   album.forEach((link) => {
-    fetch(`${Api}/get?url=${link}`)
+    fetch(`https://mydash-webmusic.hf.space/get?url=${link}`)
       .then((response) => response.json())
       .then((data) => ap.list.add([data]))
       .catch((err) => console.log(err));
@@ -30,7 +29,7 @@ function loadPlayer(album) {
 }
 
 function loadAlbum() {
-  fetch(`${Api}/album/get`)
+  fetch("https://webmusic1-se5r0bbh.b4a.run/album/get")
     .then((response) => response.json())
     .then((data) =>
       data.forEach((album) => {
@@ -57,7 +56,7 @@ function loadSideNav(albums) {
 
 document.addEventListener("htmx:afterOnLoad", function (event) {
   const link = document.querySelector("#search-box").value;
-  fetch(`${Api}/get?url=${link}`)
+  fetch(`https://mydash-webmusic.hf.space/get?url=${link}`)
     .then((response) => response.json())
     .then((data) => ap.list.add([data]))
     .catch((err) => console.log(err));

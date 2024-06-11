@@ -171,6 +171,30 @@
         "documentation": {}
     },
     {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "request",
         "importPath": "flask",
         "description": "flask",
@@ -324,6 +348,42 @@
         "description": "arc.ytdl",
         "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict",
         "detail": "arc.ytdl",
+        "documentation": {}
+    },
+    {
+        "label": "music",
+        "kind": 2,
+        "importPath": "deta-ytdl.main",
+        "description": "deta-ytdl.main",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\napp = Flask(__name__)\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")\n@app.route(\"/get\")",
+        "detail": "deta-ytdl.main",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "deta-ytdl.main",
+        "description": "deta-ytdl.main",
+        "peekOfCode": "def home():\n    return jsonify(page=\"home\")\n@app.route(\"/get\")\ndef get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return jsonify(\n        url=info[\"url\"],\n        name=info[\"title\"],\n        artist=info.get(\"channel\"),",
+        "detail": "deta-ytdl.main",
+        "documentation": {}
+    },
+    {
+        "label": "get_music",
+        "kind": 2,
+        "importPath": "deta-ytdl.main",
+        "description": "deta-ytdl.main",
+        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return jsonify(\n        url=info[\"url\"],\n        name=info[\"title\"],\n        artist=info.get(\"channel\"),\n        cover=info.get(\"thumbnail\"),\n    )",
+        "detail": "deta-ytdl.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "deta-ytdl.main",
+        "description": "deta-ytdl.main",
+        "peekOfCode": "app = Flask(__name__)\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")\n@app.route(\"/get\")\ndef get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return jsonify(\n        url=info[\"url\"],",
+        "detail": "deta-ytdl.main",
         "documentation": {}
     },
     {
