@@ -34,3 +34,5 @@ function loadPlayer(songs) {
       .catch((err) => console.log(err));
   });
 }
+
+loadAlbum();
