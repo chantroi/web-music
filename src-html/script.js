@@ -22,9 +22,9 @@ function loadAlbum() {
   const items = base.fetch().items;
   items.forEach((item) => {
     if (album === item.key) {
-      loadPlayer(album.list);
+      loadPlayer(item.list);
     } else {
-      console.log(album.key);
+      console.log(item.key);
     }
   });
 }
