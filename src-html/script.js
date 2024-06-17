@@ -19,7 +19,8 @@ const ap = new APlayer({
 });
 
 function loadAlbum() {
-  const items = base.fetch().items;
+  const res = base.fetch();
+  const items = res.items;
   items.forEach((item) => {
     if (album === item.key) {
       loadPlayer(item.list);
