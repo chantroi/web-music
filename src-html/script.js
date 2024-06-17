@@ -1,3 +1,4 @@
+const urlParams = new URLSearchParams(window.location.search);
 const album = urlParams.get("a") || "Web Âm Nhạc";
 const deta = Deta("c0a1xmuzlhz_9ukoxqAYL8nr8w9hPai2kPbyf7qnAaGC");
 const base = deta.Base("music");
