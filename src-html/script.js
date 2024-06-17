@@ -21,13 +21,11 @@ const ap = new APlayer({
 async function loadAlbum() {
   try {
     const res = await base.fetch();
-    console.log("Fetch result:", res);
-
     if (res && res.items) {
       const items = res.items;
       items.forEach((item) => {
         if (album === item.key) {
-          await loadPlayer(item.list);
+          loadPlayer(item.list);
         } else {
           console.log(`Skipping album: ${item.key}`);
         }
