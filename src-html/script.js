@@ -27,7 +27,7 @@ async function loadAlbum() {
       const items = res.items;
       items.forEach((item) => {
         if (album === item.key) {
-          loadPlayer(item.list);
+          await loadPlayer(item.list);
         } else {
           console.log(`Skipping album: ${item.key}`);
         }
