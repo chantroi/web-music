@@ -1,110 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="/static/htmx.min.js"></script>
-    <script src="/static/APlayer.min.js"></script>
-    <link rel="stylesheet" href="/static/APlayer.min.css" />
-    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-      eruda.init();
-    </script>
 
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="keywords" content="Web Music">
+  <meta name="description" content="Web music player">
 
-      const firebaseConfig = {
-        apiKey: "AIzaSyDHJSiNQeIsdnuDpvFLM7a-4DT0vLr92h8",
-        authDomain: "my-project-5efe1.firebaseapp.com",
-        projectId: "my-project-5efe1",
-        storageBucket: "my-project-5efe1.appspot.com",
-        messagingSenderId: "789539920018",
-        appId: "1:789539920018:web:fee12ce3a8384f2eca2e4b",
-        measurementId: "G-YFPTM4QNX7",
-      };
+  <script src="
+https://cdn.jsdelivr.net/npm/htmx@0.0.2/htmx.min.js
+"></script>
+  <script src="
+https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js
+"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="//cdn.js delivr.net/npm/eruda"></script>
+  <script src="script.js"></script>
+  <script type="module" src="firebase.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css
+  " rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-    </script>
+  <title>Common Media</title>
+</head>
 
-    <style>
-      body {
-        background-color: white;
-        color: black;
-      }
-      @media (prefers-color-scheme: dark) {
-        body {
-          background-color: black;
-          color: white;
-        }
-        div {
-          background-color: darkslategrey;
-        }
-        span {
-          color: orange;
-        }
-        li {
-          background-color: black;
-        }
-      }
-    </style>
-    <title>Common Media</title>
-  </head>
-  <body onload="loadAlbum()">
-    <nav class="nav-extended">
-      <div class="nav-wrapper">
-        <a href="#" data-target="mobile-demo" class="sidenav-trigger"
-          ><i class="material-icons">menu</i></a
-        >
-        <fieldset>
-          <form id="queries">
-            <div class="input-field">
-              <input id="search-box" type="text" name="url" />
+<body onload="loadAlbum()">
+  <nav class="nav-extended">
+    <div class="nav-wrapper">
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <fieldset>
+        <form id="queries">
+          <div class="input-field">
+            <input id="search-box" type="text" name="url" />
 
-              <label class="label-icon" for="search-box"
-                ><i class="material-icons">search</i></label
-              >
-              <input
-                id="album"
-                type="hidden"
-                name="album"
-                value="Web Âm Nhạc"
-              />
-            </div>
-            <button
-              class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
-              hx-get="https://webmusic1-se5r0bbh.b4a.run/album/add"
-              hx-params="*"
-              hx-include="#queries"
-              type="submit"
-            >
-              <i class="material-icons">add</i>
-            </button>
-          </form>
-        </fieldset>
-      </div>
-    </nav>
-    <ul class="sidenav" id="mobile-demo"></ul>
-    <br /><br />
-    <div class="row">
-      <div class="col s12 m7">
-        <div class="card">
-          <div id="player"></div>
-        </div>
+            <label class="label-icon" for="search-box"><i class="material-icons">search</i></label>
+            <input id="album" type="hidden" name="album" value="Web Âm Nhạc" />
+          </div>
+          <button class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
+            hx-get="https://webmusic1-se5r0bbh.b4a.run/album/add" hx-params="*" hx-include="#queries" type="submit">
+            <i class="material-icons">add</i>
+          </button>
+        </form>
+      </fieldset>
+    </div>
+  </nav>
+  <ul class="sidenav" id="mobile-demo"></ul>
+  <br /><br />
+  <div class="row">
+    <div class="col s12 m7">
+      <div class="card">
+        <div id="player"></div>
       </div>
     </div>
+  </div>
+</body>
 
-    <script src="/script.js"></script>
-  </body>
 </html>
