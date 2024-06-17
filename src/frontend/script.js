@@ -1,5 +1,3 @@
-eruda.init();
-
 const urlParams = new URLSearchParams(window.location.search);
 const albumInput = document.querySelector("#album");
 const Album = urlParams.get("a") || "Web Âm Nhạc";
