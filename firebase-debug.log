@@ -1,0 +1,62 @@
+[debug] [2024-06-17T13:17:19.418Z] ----------------------------------------------------------------------
+[debug] [2024-06-17T13:17:19.422Z] Command:       /usr/local/nvm/versions/node/v20.14.0/bin/node /usr/local/nvm/versions/node/v20.14.0/bin/firebase deploy
+[debug] [2024-06-17T13:17:19.422Z] CLI Version:   13.10.2
+[debug] [2024-06-17T13:17:19.423Z] Platform:      linux
+[debug] [2024-06-17T13:17:19.423Z] Node Version:  v20.14.0
+[debug] [2024-06-17T13:17:19.423Z] Time:          Mon Jun 17 2024 13:17:19 GMT+0000 (Coordinated Universal Time)
+[debug] [2024-06-17T13:17:19.424Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-06-17T13:17:19.561Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-06-17T13:17:19.562Z] > authorizing via signed-in user (tonglanhchua@gmail.com)
+[debug] [2024-06-17T13:17:19.562Z] [iam] checking project ytm-media for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2024-06-17T13:17:19.565Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/ytm-media:testIamPermissions [none]
+[debug] [2024-06-17T13:17:19.565Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/ytm-media:testIamPermissions x-goog-quota-user=projects/ytm-media
+[debug] [2024-06-17T13:17:19.565Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/ytm-media:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-06-17T13:17:20.631Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/ytm-media:testIamPermissions 200
+[debug] [2024-06-17T13:17:20.632Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/ytm-media:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2024-06-17T13:17:20.633Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/ytm-media [none]
+[debug] [2024-06-17T13:17:21.095Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/ytm-media 200
+[debug] [2024-06-17T13:17:21.096Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/ytm-media {"projectId":"ytm-media","projectNumber":"853099182755","displayName":"Music","name":"projects/ytm-media","resources":{"hostingSite":"ytm-media"},"state":"DELETED","etag":"1_bcfd4667-9b09-4528-9bbe-66978881bf98"}
+[info] 
+[info] === Deploying to 'ytm-media'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2024-06-17T13:17:21.103Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amnhac/versions [none]
+[debug] [2024-06-17T13:17:21.104Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amnhac/versions {"status":"CREATED","labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2024-06-17T13:17:21.898Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amnhac/versions 200
+[debug] [2024-06-17T13:17:21.898Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amnhac/versions {"name":"projects/789539920018/sites/amnhac/versions/70a818374482f39f","status":"CREATED","config":{},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[amnhac]: beginning deploy... 
+[info] i  hosting[amnhac]: found 5 files in src/frontend 
+[debug] [2024-06-17T13:17:21.906Z] [hosting] uploading with 200 concurrency
+[debug] [2024-06-17T13:17:21.918Z] [hosting] hash cache [c3JjL2Zyb250ZW5k] stored for 5 files
+[debug] [2024-06-17T13:17:21.919Z] [hosting][hash queue][FINAL] {"max":6,"min":1,"avg":2,"active":0,"complete":5,"success":5,"errored":0,"retried":0,"total":5,"elapsed":8}
+[debug] [2024-06-17T13:17:21.919Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/789539920018/sites/amnhac/versions/70a818374482f39f:populateFiles [none]
+[debug] [2024-06-17T13:17:21.919Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/789539920018/sites/amnhac/versions/70a818374482f39f:populateFiles {"files":{"/404.html":"6537619fa0edb6a05c3fa83265461172fea2307ecff34424f323310c8c8eb4be","/firebase.js":"322863ff1004725048e9b2d5b68c5dc84a8ae0b8f94c8525fb2d24a97cf870d3","/script.js":"feebda9fb7cdfc7932fb502cbf7cf012e45c11105f04aacda713f42e821969af","/style.css":"cdadb0d7f794739c4963bfd088536dd6b0537624cdef95c78c348ad0ee89c904","/index.html":"b64b651eca184cc9b0dbe21c1bb896bab763758aebd47a00c78a3423a499d48d"}}
+[debug] [2024-06-17T13:17:22.286Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/789539920018/sites/amnhac/versions/70a818374482f39f:populateFiles 200
+[debug] [2024-06-17T13:17:22.286Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/789539920018/sites/amnhac/versions/70a818374482f39f:populateFiles {"uploadRequiredHashes":["b64b651eca184cc9b0dbe21c1bb896bab763758aebd47a00c78a3423a499d48d"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/amnhac/versions/70a818374482f39f/files"}
+[debug] [2024-06-17T13:17:22.288Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/amnhac/versions/70a818374482f39f/files/b64b651eca184cc9b0dbe21c1bb896bab763758aebd47a00c78a3423a499d48d [none]
+[debug] [2024-06-17T13:17:22.288Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/amnhac/versions/70a818374482f39f/files/b64b651eca184cc9b0dbe21c1bb896bab763758aebd47a00c78a3423a499d48d [stream]
+[debug] [2024-06-17T13:17:22.290Z] [hosting][populate queue][FINAL] {"max":371,"min":371,"avg":371,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":373}
+[debug] [2024-06-17T13:17:22.290Z] [hosting] uploads queued: 1
+[debug] [2024-06-17T13:17:23.430Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/amnhac/versions/70a818374482f39f/files/b64b651eca184cc9b0dbe21c1bb896bab763758aebd47a00c78a3423a499d48d 200
+[debug] [2024-06-17T13:17:23.431Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/amnhac/versions/70a818374482f39f/files/b64b651eca184cc9b0dbe21c1bb896bab763758aebd47a00c78a3423a499d48d [stream]
+[debug] [2024-06-17T13:17:23.431Z] [hosting][upload queue][FINAL] {"max":1144,"min":1144,"avg":1144,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1144}
+[info] ✔  hosting[amnhac]: file upload complete 
+[debug] [2024-06-17T13:17:23.433Z] [hosting] deploy completed after 1532ms
+[debug] [2024-06-17T13:17:23.433Z] [
+  {
+    "config": {
+      "site": "amnhac",
+      "public": "src/frontend",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    },
+    "version": "projects/789539920018/sites/amnhac/versions/70a818374482f39f"
+  }
+]
+[info] i  hosting[amnhac]: finalizing version... 
+[debug] [2024-06-17T13:17:23.435Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amnhac/versions/70a818374482f39f updateMask=status%2Cconfig
+[debug] [2024-06-17T13:17:23.435Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/-/sites/amnhac/versions/70a818374482f39f {"status":"FINALIZED","config":{}}
