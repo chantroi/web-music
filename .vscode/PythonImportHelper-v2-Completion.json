@@ -331,7 +331,7 @@
         "kind": 6,
         "importPath": "src.server.base",
         "description": "src.server.base",
-        "peekOfCode": "class Album:\n    def __init__(self):\n        deta = Deta(\"c0a1xmuzlhz_9ukoxqAYL8nr8w9hPai2kPbyf7qnAaGC\")\n        self.db = deta.Base(\"music\")\n    def get(self, name: str):\n        return self.db.get(name)\n    def put(self, name: str, url: str):\n        album = self.get(name)\n        if album:\n            if url in self.list(name):",
+        "peekOfCode": "class Album:\n    def __init__(self):\n        deta = Deta(\"c0Jtyij8pU2_5T5DgCv2L7G6SvpQXR8pU8ujNJbqbW7v\")\n        self.db = deta.Base(\"music\")\n    def get(self, name: str):\n        return self.db.get(name)\n    def put(self, name: str, url: str):\n        album = self.get(name)\n        if album:\n            if url in self.list(name):",
         "detail": "src.server.base",
         "documentation": {}
     },

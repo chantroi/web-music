@@ -4,7 +4,7 @@ from deta import Deta
 
 class Album:
     def __init__(self):
-        deta = Deta("c0a1xmuzlhz_9ukoxqAYL8nr8w9hPai2kPbyf7qnAaGC")
+        deta = Deta("c0Jtyij8pU2_5T5DgCv2L7G6SvpQXR8pU8ujNJbqbW7v")
         self.db = deta.Base("music")
 
     def get(self, name: str):
