@@ -1,6 +1,8 @@
+import json
 import yt_dlp
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from youtube_search import YoutubeSearch
 
 try:
     from base import Album
@@ -18,9 +20,23 @@ def music(video_url):
         return info_dict
 
 
+def ytsearch(kw):
+    results = YoutubeSearch("nguoi la oi", max_results=5).to_json()
+    return json.loads(results)
+
+
 @app.route("/")
 def home():
     return jsonify(page="home")
+
+
+@app.route("/search")
+def yt_search():
+    keyword = request.args.get("kw")
+    if keyword:
+        return jsonify(ytsearch(keyword))
+    else:
+        return jsonify(status="error", message="no keyword to search")
 
 
 @app.route("/get")
