@@ -1,141 +1,11 @@
 [
     {
-        "label": "os",
+        "label": "json",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
-        "documentation": {}
-    },
-    {
-        "label": "create_engine",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
-        "isExtraImport": true,
-        "detail": "sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "Column",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
-        "isExtraImport": true,
-        "detail": "sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "Integer",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
-        "isExtraImport": true,
-        "detail": "sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "String",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
-        "isExtraImport": true,
-        "detail": "sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "sessionmaker",
-        "importPath": "sqlalchemy.orm",
-        "description": "sqlalchemy.orm",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.orm",
-        "documentation": {}
-    },
-    {
-        "label": "declarative_base",
-        "importPath": "sqlalchemy.orm",
-        "description": "sqlalchemy.orm",
-        "isExtraImport": true,
-        "detail": "sqlalchemy.orm",
-        "documentation": {}
-    },
-    {
-        "label": "requests",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "requests",
-        "description": "requests",
-        "detail": "requests",
-        "documentation": {}
-    },
-    {
-        "label": "concurrent.futures",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "concurrent.futures",
-        "description": "concurrent.futures",
-        "detail": "concurrent.futures",
-        "documentation": {}
-    },
-    {
-        "label": "Flask",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "render_template",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "request",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "jsonify",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "Flask",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "request",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "jsonify",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "HTMX",
-        "importPath": "flask_htmx",
-        "description": "flask_htmx",
-        "isExtraImport": true,
-        "detail": "flask_htmx",
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
         "documentation": {}
     },
     {
@@ -148,6 +18,39 @@
         "documentation": {}
     },
     {
+        "label": "YoutubeSearch",
+        "importPath": "youtube_search",
+        "description": "youtube_search",
+        "isExtraImport": true,
+        "detail": "youtube_search",
+        "documentation": {}
+    },
+    {
+        "label": "YoutubeSearch",
+        "importPath": "youtube_search",
+        "description": "youtube_search",
+        "isExtraImport": true,
+        "detail": "youtube_search",
+        "documentation": {}
+    },
+    {
+        "label": "YoutubeSearch",
+        "importPath": "youtube_search",
+        "description": "youtube_search",
+        "isExtraImport": true,
+        "detail": "youtube_search",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "Deta",
         "importPath": "deta",
         "description": "deta",
@@ -156,12 +59,27 @@
         "documentation": {}
     },
     {
-        "label": "json",
-        "kind": 6,
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
         "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
         "documentation": {}
     },
     {
@@ -173,118 +91,30 @@
         "documentation": {}
     },
     {
-        "label": "YoutubeSearch",
-        "importPath": "youtube_search",
-        "description": "youtube_search",
-        "isExtraImport": true,
-        "detail": "youtube_search",
-        "documentation": {}
-    },
-    {
-        "label": "YoutubeSearch",
-        "importPath": "youtube_search",
-        "description": "youtube_search",
-        "isExtraImport": true,
-        "detail": "youtube_search",
-        "documentation": {}
-    },
-    {
-        "label": "AlbumDB",
-        "kind": 6,
-        "importPath": "arc.db.client",
-        "description": "arc.db.client",
-        "peekOfCode": "class AlbumDB:\n    def __init__(self) -> None:\n        db_url = os.environ[\"DB_URL\"]\n        engine = create_engine(db_url)\n        Base.metadata.create_all(engine)\n        Session = sessionmaker(bind=engine)\n        self.session = Session()\n    def add(self, song: Song) -> dict:\n        self.session.merge(song)\n        self.session.commit()",
-        "detail": "arc.db.client",
-        "documentation": {}
-    },
-    {
-        "label": "Song",
-        "kind": 6,
-        "importPath": "arc.db.model",
-        "description": "arc.db.model",
-        "peekOfCode": "class Song(Base):\n    __tablename__ = \"songs\"\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    artist = Column(String, nullable=True)\n    url = Column(String)\n    origin = Column(String)\n    cover = Column(String, nullable=True)\n    album = Column(String, default=\"common\")\n    def json(self) -> dict:",
-        "detail": "arc.db.model",
-        "documentation": {}
-    },
-    {
-        "label": "Base",
-        "kind": 5,
-        "importPath": "arc.db.model",
-        "description": "arc.db.model",
-        "peekOfCode": "Base = declarative_base()\nclass Song(Base):\n    __tablename__ = \"songs\"\n    id = Column(Integer, primary_key=True, autoincrement=True)\n    name = Column(String)\n    artist = Column(String, nullable=True)\n    url = Column(String)\n    origin = Column(String)\n    cover = Column(String, nullable=True)\n    album = Column(String, default=\"common\")",
-        "detail": "arc.db.model",
-        "documentation": {}
-    },
-    {
-        "label": "Drive",
-        "kind": 6,
-        "importPath": "arc.drive.client",
-        "description": "arc.drive.client",
-        "peekOfCode": "class Drive:\n    def __init__(self) -> None:\n        self.url = os.environ[\"DRIVE\"]\n    def get(self, album: str = \"common\") -> str:\n        req = requests.get(self.url, params={\"album\": album}, timeout=20)\n        res = req.json()\n        return res[\"list\"]\n    def put(self, file: dict) -> None:\n        requests.post(self.url, json=file, timeout=20)\n    def delete(self, filename: str) -> None:",
-        "detail": "arc.drive.client",
-        "documentation": {}
-    },
-    {
-        "label": "home",
-        "kind": 2,
-        "importPath": "arc.app",
-        "description": "arc.app",
-        "peekOfCode": "def home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"common\":\n        pre = db.list(album)\n    else:",
-        "detail": "arc.app",
-        "documentation": {}
-    },
-    {
-        "label": "list_",
-        "kind": 2,
-        "importPath": "arc.app",
-        "description": "arc.app",
-        "peekOfCode": "def list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []\n    if album and album != \"common\":\n        pre = db.list(album)\n    else:\n        pre = db.list()\n    if pre:\n        for song in pre:",
-        "detail": "arc.app",
-        "documentation": {}
-    },
-    {
-        "label": "add_song",
-        "kind": 2,
-        "importPath": "arc.app",
-        "description": "arc.app",
-        "peekOfCode": "def add_song():\n    origin = request.args.get(\"url\")\n    album = request.args.get(\"album\")\n    if not origin:\n        return jsonify(err=\"no url\")\n    info = music(origin)\n    url = info[\"url\"]\n    name = info[\"title\"]\n    artist = info.get(\"channel\")\n    cover = info.get(\"thumbnail\")",
-        "detail": "arc.app",
-        "documentation": {}
-    },
-    {
-        "label": "delete_song",
-        "kind": 2,
-        "importPath": "arc.app",
-        "description": "arc.app",
-        "peekOfCode": "def delete_song():\n    song_id = request.args.get(\"id\")",
-        "detail": "arc.app",
-        "documentation": {}
-    },
-    {
-        "label": "app",
-        "kind": 5,
-        "importPath": "arc.app",
-        "description": "arc.app",
-        "peekOfCode": "app = Flask(__name__)\nHTMX(app)\ndb = AlbumDB()\n@app.route(\"/\")\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")",
-        "detail": "arc.app",
-        "documentation": {}
-    },
-    {
-        "label": "db",
-        "kind": 5,
-        "importPath": "arc.app",
-        "description": "arc.app",
-        "peekOfCode": "db = AlbumDB()\n@app.route(\"/\")\n@app.route(\"/<album>\")\ndef home(album=\"common\"):\n    return render_template(\"index.html\", album=album)\n@app.route(\"/list\")\ndef list_():\n    album = request.args.get(\"album\")\n    pre = None\n    songs = []",
-        "detail": "arc.app",
-        "documentation": {}
-    },
-    {
         "label": "music",
         "kind": 2,
-        "importPath": "arc.ytdl",
-        "description": "arc.ytdl",
-        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict",
-        "detail": "arc.ytdl",
+        "importPath": "src.appwrite.main",
+        "description": "src.appwrite.main",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\ndef main(ctx):\n    action = ctx.req.query(\"action\")",
+        "detail": "src.appwrite.main",
+        "documentation": {}
+    },
+    {
+        "label": "ytsearch",
+        "kind": 2,
+        "importPath": "src.appwrite.main",
+        "description": "src.appwrite.main",
+        "peekOfCode": "def ytsearch(kw):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\ndef main(ctx):\n    action = ctx.req.query(\"action\")\n    if action == \"search\":\n        kw = ctx.req.query(\"kw\")\n        result = ytsearch(ctx.req.query(kw))\n        return ctx.res.json(result)\n    elif action == \"music\":",
+        "detail": "src.appwrite.main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "src.appwrite.main",
+        "description": "src.appwrite.main",
+        "peekOfCode": "def main(ctx):\n    action = ctx.req.query(\"action\")\n    if action == \"search\":\n        kw = ctx.req.query(\"kw\")\n        result = ytsearch(ctx.req.query(kw))\n        return ctx.res.json(result)\n    elif action == \"music\":\n        url = ctx.req.query(\"url\")\n        info = music(url)\n        return ctx.res.json(",
+        "detail": "src.appwrite.main",
         "documentation": {}
     },
     {
