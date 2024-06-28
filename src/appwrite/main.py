@@ -16,13 +16,13 @@ def ytsearch(kw):
 
 
 def main(ctx):
-    action = ctx.req.query("action")
+    action = ctx.req.query.get("action")
     if action == "search":
-        kw = ctx.req.query("kw")
+        kw = ctx.req.query.get("kw")
         result = ytsearch(ctx.req.query(kw))
         return ctx.res.json(result)
     elif action == "music":
-        url = ctx.req.query("url")
+        url = ctx.req.query.get("url")
         info = music(url)
         return ctx.res.json(
             {
