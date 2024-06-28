@@ -1,4 +1,5 @@
 import json
+import requests
 import yt_dlp
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -15,8 +16,14 @@ class Song(BaseModel):
     cover: str
 
 
+class File(BaseModel):
+    name: str
+    data: bytes
+
+
 deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB")
 db = deta.Base("web-music")
+drive = deta.Drive("web-music")
 app = Flask(__name__)
 CORS(app)
 
@@ -61,11 +68,15 @@ def get_music():
 
 @app.route("/add")
 def update_album():
+    dl_url = request.args.get("dl")
     url = request.args.get("url")
     name = request.args.get("name")
     artist = request.args.get("artist")
     cover = request.args.get("cover")
     song = Song(key=url, name=name, artist=artist, url=url, cover=cover)
+    data = requests.get(dl_url).content
+    file = File(name=name, data=data)
+    drive.put_file(file)
     db.put(song)
     return jsonify(status="success")
 
