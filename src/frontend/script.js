@@ -54,6 +54,24 @@ function loadSideNav(albums) {
   );
 }
 
+function ytSearch() {
+  const inputText = document.querySelector("#search-box").value;
+  if (!inputText.startsWith("http")) {
+    fetch("https://mydash-webmusic.hf.space/")
+      .then((response) => response.json())
+      .then((data) => data.forEach((result) => showResult(result)));
+  }
+}
+
+function showResult(result) {
+  const nav = document.querySelector("#nav-bar");
+  const cover = result.cover;
+  const link = `https://youtube.com${result.url_suffix}`;
+  const title = result.title;
+  const ulist = document.createElement("ul");
+  ul;
+}
+
 document.addEventListener("htmx:afterOnLoad", function (event) {
   const link = document.querySelector("#search-box").value;
   fetch(`https://mydash-webmusic.hf.space/get?url=${link}`)
