@@ -74,6 +74,7 @@ function showResult(result) {
   const title = result.title;
   const ulist = document.createElement("ul");
   const li = document.createElement("li");
+  const a = document.createElement("a");
 }
 
 document.addEventListener("htmx:afterOnLoad", function (event) {

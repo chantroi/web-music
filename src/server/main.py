@@ -72,5 +72,4 @@ def delete_music():
     url = request.args.get("url")
     name = request.args.get("album")
     album.delete(name, url)
-    return jsonify(status="success")
-
+    return jsonify(status="success", message=f"{url} deleted")

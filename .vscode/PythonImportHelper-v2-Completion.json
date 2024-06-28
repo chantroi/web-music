@@ -185,7 +185,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def get_album():\n    album = Album()\n    return jsonify(album.albums())\n@app.route(\"/album/delete\")\ndef delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\")",
+        "peekOfCode": "def get_album():\n    album = Album()\n    return jsonify(album.albums())\n@app.route(\"/album/delete\")\ndef delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\", message=f\"{url} deleted\")",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -194,7 +194,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\")",
+        "peekOfCode": "def delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\", message=f\"{url} deleted\")",
         "detail": "src.server.main",
         "documentation": {}
     },
