@@ -21,7 +21,9 @@ const ap = new APlayer({
 
 function loadPlayer(album) {
   album.forEach((link) => {
-    fetch(`http://666ac35858378d601186.appwrite.global/?type=music&url=${link}`)
+    fetch(
+      `https://667e81b8759f2fa458e0.appwrite.global/?action=music&url=${link}`
+    )
       .then((response) => response.json())
       .then((data) => ap.list.add([data]))
       .catch((err) => console.log(err));
@@ -57,7 +59,9 @@ function loadSideNav(albums) {
 function ytSearch() {
   const inputText = document.querySelector("#search-box").value;
   if (!inputText.startsWith("http")) {
-    fetch("https://mydash-webmusic.hf.space/")
+    fetch(
+      `https://667e81b8759f2fa458e0.appwrite.global/?action=search&kw=${inputText}`
+    )
       .then((response) => response.json())
       .then((data) => data.forEach((result) => showResult(result)));
   }
