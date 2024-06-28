@@ -21,7 +21,7 @@ const ap = new APlayer({
 
 function loadPlayer(album) {
   album.forEach((link) => {
-    fetch(`https://mydash-webmusic.hf.space/get?url=${link}`)
+    fetch(`http://666ac35858378d601186.appwrite.global/?type=music&url=${link}`)
       .then((response) => response.json())
       .then((data) => ap.list.add([data]))
       .catch((err) => console.log(err));
@@ -69,7 +69,7 @@ function showResult(result) {
   const link = `https://youtube.com${result.url_suffix}`;
   const title = result.title;
   const ulist = document.createElement("ul");
-  ul;
+  const li = document.createElement("li");
 }
 
 document.addEventListener("htmx:afterOnLoad", function (event) {
