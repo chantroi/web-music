@@ -59,6 +59,14 @@
         "documentation": {}
     },
     {
+        "label": "Deta",
+        "importPath": "deta",
+        "description": "deta",
+        "isExtraImport": true,
+        "detail": "deta",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -88,6 +96,14 @@
         "description": "flask_cors",
         "isExtraImport": true,
         "detail": "flask_cors",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
         "documentation": {}
     },
     {
@@ -122,8 +138,17 @@
         "kind": 6,
         "importPath": "src.server.base",
         "description": "src.server.base",
-        "peekOfCode": "class Album:\n    def __init__(self):\n        deta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\n        self.db = deta.Base(\"web-music\")\n    def get(self, name: str):\n        return self.db.get(name)\n    def put(self, name: str, url: str):\n        album = self.get(name)\n        if album:\n            if url in self.list(name):",
+        "peekOfCode": "class Album:\n    def __init__(self):\n        deta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\n        self.db = deta.Base(\"web-music\")\n    def get(self, name: str):\n        return self.db.get(name)\n    def put(self,   song: Song):\n        album = self.get(name)\n        if album:\n            if url in self.list(name):",
         "detail": "src.server.base",
+        "documentation": {}
+    },
+    {
+        "label": "Song",
+        "kind": 6,
+        "importPath": "src.server.main",
+        "description": "src.server.main",
+        "peekOfCode": "class Song(BaseModel):\n    key: str\n    name: str\n    artist: str\n    url: str\n    cover: str\ndeta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\ndb = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)",
+        "detail": "src.server.main",
         "documentation": {}
     },
     {
@@ -131,7 +156,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw):\n    results = YoutubeSearch(\"nguoi la oi\", max_results=5).to_json()\n    return json.loads(results)\n@app.route(\"/\")\ndef home():",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\n@app.route(\"/\")\ndef home():",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -140,7 +165,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def ytsearch(kw):\n    results = YoutubeSearch(\"nguoi la oi\", max_results=5).to_json()\n    return json.loads(results)\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")\n@app.route(\"/search\")\ndef yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:",
+        "peekOfCode": "def ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")\n@app.route(\"/search\")\ndef yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -167,7 +192,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return jsonify(\n        url=info[\"url\"],\n        name=info[\"title\"],\n        artist=info.get(\"channel\"),\n        cover=info.get(\"thumbnail\"),\n    )\n@app.route(\"/album/add\")",
+        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return jsonify(\n        url=info[\"url\"],\n        name=info[\"title\"],\n        artist=info.get(\"channel\"),\n        cover=info.get(\"thumbnail\"),\n    )\n@app.route(\"/add\")",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -176,7 +201,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def update_album():\n    album = Album()\n    name = request.args.get(\"album\")\n    url = request.args.get(\"url\")\n    album.put(name, url)\n    return jsonify(status=\"success\")\n@app.route(\"/album/get\")\ndef get_album():\n    album = Album()\n    return jsonify(album.albums())",
+        "peekOfCode": "def update_album():\n    url = request.args.get(\"url\")\n    name = request.args.get(\"name\")\n    artist = request.args.get(\"artist\")\n    cover = request.args.get(\"cover\")\n    song = Song(key=url, name=name, artist=artist, url=url, cover=cover)\n    db.put(song)\n    return jsonify(status=\"success\")\n@app.route(\"/list\")\ndef get_album():",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -185,7 +210,7 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def get_album():\n    album = Album()\n    return jsonify(album.albums())\n@app.route(\"/album/delete\")\ndef delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\", message=f\"{url} deleted\")",
+        "peekOfCode": "def get_album():\n    result = db.fetch().items\n    return jsonify(result)\n@app.route(\"/delete\")\ndef delete_music():\n    key = request.args.get(\"name\")\n    db.delete(key)\n    return jsonify(status=\"success\")",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -194,7 +219,25 @@
         "kind": 2,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "def delete_music():\n    album = Album()\n    url = request.args.get(\"url\")\n    name = request.args.get(\"album\")\n    album.delete(name, url)\n    return jsonify(status=\"success\", message=f\"{url} deleted\")",
+        "peekOfCode": "def delete_music():\n    key = request.args.get(\"name\")\n    db.delete(key)\n    return jsonify(status=\"success\")",
+        "detail": "src.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "deta",
+        "kind": 5,
+        "importPath": "src.server.main",
+        "description": "src.server.main",
+        "peekOfCode": "deta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\ndb = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):",
+        "detail": "src.server.main",
+        "documentation": {}
+    },
+    {
+        "label": "db",
+        "kind": 5,
+        "importPath": "src.server.main",
+        "description": "src.server.main",
+        "peekOfCode": "db = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()",
         "detail": "src.server.main",
         "documentation": {}
     },
@@ -203,7 +246,7 @@
         "kind": 5,
         "importPath": "src.server.main",
         "description": "src.server.main",
-        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw):\n    results = YoutubeSearch(\"nguoi la oi\", max_results=5).to_json()\n    return json.loads(results)",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)",
         "detail": "src.server.main",
         "documentation": {}
     },

@@ -10,7 +10,7 @@ class Album:
     def get(self, name: str):
         return self.db.get(name)
 
-    def put(self, name: str, url: str):
+    def put(self,   song: Song):
         album = self.get(name)
         if album:
             if url in self.list(name):

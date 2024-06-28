@@ -3,12 +3,20 @@ import yt_dlp
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from youtube_search import YoutubeSearch
+from deta import Deta
+from pydantic import BaseModel
 
-try:
-    from base import Album
-except:
-    from .base import Album
 
+class Song(BaseModel):
+    key: str
+    name: str
+    artist: str
+    url: str
+    cover: str
+
+
+deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB")
+db = deta.Base("web-music")
 app = Flask(__name__)
 CORS(app)
 
@@ -20,8 +28,8 @@ def music(video_url):
         return info_dict
 
 
-def ytsearch(kw):
-    results = YoutubeSearch("nguoi la oi", max_results=5).to_json()
+def ytsearch(kw: str):
+    results = YoutubeSearch(kw, max_results=5).to_json()
     return json.loads(results)
 
 
@@ -51,25 +59,25 @@ def get_music():
     )
 
 
-@app.route("/album/add")
+@app.route("/add")
 def update_album():
-    album = Album()
-    name = request.args.get("album")
     url = request.args.get("url")
-    album.put(name, url)
+    name = request.args.get("name")
+    artist = request.args.get("artist")
+    cover = request.args.get("cover")
+    song = Song(key=url, name=name, artist=artist, url=url, cover=cover)
+    db.put(song)
     return jsonify(status="success")
 
 
-@app.route("/album/get")
+@app.route("/list")
 def get_album():
-    album = Album()
-    return jsonify(album.albums())
+    result = db.fetch().items
+    return jsonify(result)
 
 
-@app.route("/album/delete")
+@app.route("/delete")
 def delete_music():
-    album = Album()
-    url = request.args.get("url")
-    name = request.args.get("album")
-    album.delete(name, url)
-    return jsonify(status="success", message=f"{url} deleted")
+    key = request.args.get("name")
+    db.delete(key)
+    return jsonify(status="success")

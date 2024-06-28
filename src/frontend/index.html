@@ -1,19 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>Common Media</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="keywords" content="Web Music" />
     <meta name="description" content="Web music player" />
-
-    <script
-      src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.js"
-      integrity="sha384-qbtR4rS9RrUMECUWDWM2+YGgN3U4V4ZncZ0BvUcg9FGct0jqXz3PUdVpU1p0yrXS"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
 
     <link
       href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"
@@ -28,14 +20,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <script>
-      eruda.init();
-    </script>
-
-    <title>Common Media</title>
   </head>
 
-  <body onload="loadAlbum()">
+  <body onload="loadPlaylist()">
     <nav class="nav-extended">
       <div class="nav-wrapper">
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"
@@ -49,19 +36,11 @@
               <label class="label-icon" for="search-box"
                 ><i class="material-icons">search</i></label
               >
-              <input
-                id="album"
-                type="hidden"
-                name="album"
-                value="Web Âm Nhạc"
-              />
             </div>
             <button
               class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
-              hx-get="https://webmusic1-se5r0bbh.b4a.run/album/add"
-              hx-params="*"
-              hx-include="#queries"
               type="submit"
+              onclick="loadSong()"
             >
               <i class="material-icons">add</i>
             </button>
@@ -78,6 +57,14 @@
         </div>
       </div>
     </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+
     <script src="script.js"></script>
+    <script>
+      eruda.init();
+    </script>
   </body>
 </html>

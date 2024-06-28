@@ -1,10 +1,3 @@
-const urlParams = new URLSearchParams(window.location.search);
-const albumInput = document.querySelector("#album");
-const Album = urlParams.get("a") || "Web Âm Nhạc";
-
-albumInput.value = Album;
-document.title = Album;
-
 const ap = new APlayer({
   container: document.getElementById("player"),
   mini: false,
@@ -30,30 +23,38 @@ function loadPlayer(album) {
   });
 }
 
-function loadAlbum() {
-  fetch("https://webmusic1-se5r0bbh.b4a.run/album/get")
+function loadPlaylist() {
+  fetch("https://webmusic1-se5r0bbh.b4a.run/list")
     .then((response) => response.json())
     .then((data) =>
       data.forEach((album) => {
-        if (Album === album.key) {
-          loadPlayer(album.list);
-        } else {
-          console.log(album.key);
-        }
+        loadPlayer(album.list);
       })
     )
     .catch((err) => console.log(err));
 }
 
-function loadSideNav(albums) {
-  const sideNav = document.querySelector("#mobile-demo");
-  albums.forEach(
-    (album) =>
-      function () {
-        const snItem = `<li><a onclick="loadAlbum(${album})">${album.key}</a></li>`;
-        sideNav.insertAdjacentHTML("beforeend", snItem);
-      }
-  );
+function loadSong() {
+  const link = document.querySelector("#search-box").value;
+  fetch(
+    `https://667e81b8759f2fa458e0.appwrite.global/?action=music&url=${link}`
+  )
+    .then((response) => response.json())
+    .then(
+      (data) =>
+        function () {
+          ap.list.add([data]);
+          fetch(
+            `https://webmusic1-se5r0bbh.b4a.run/add?url=${data.url}&name=${data.name}&artist=${data.artist}&cover=${data.cover}`
+          )
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((err) => console.log(err));
+        }
+    )
+    .catch((err) => console.log(err));
+
+  document.querySelector("#search-box").value = "";
 }
 
 function ytSearch() {
@@ -66,23 +67,3 @@ function ytSearch() {
       .then((data) => data.forEach((result) => showResult(result)));
   }
 }
-
-function showResult(result) {
-  const nav = document.querySelector("#nav-bar");
-  const cover = result.cover;
-  const link = `https://youtube.com${result.url_suffix}`;
-  const title = result.title;
-  const ulist = document.createElement("ul");
-  const li = document.createElement("li");
-  const a = document.createElement("a");
-}
-
-document.addEventListener("htmx:afterOnLoad", function (event) {
-  const link = document.querySelector("#search-box").value;
-  fetch(`https://mydash-webmusic.hf.space/get?url=${link}`)
-    .then((response) => response.json())
-    .then((data) => ap.list.add([data]))
-    .catch((err) => console.log(err));
-
-  document.querySelector("#search-box").value = "";
-});
