@@ -34,14 +34,6 @@
         "documentation": {}
     },
     {
-        "label": "YoutubeSearch",
-        "importPath": "youtube_search",
-        "description": "youtube_search",
-        "isExtraImport": true,
-        "detail": "youtube_search",
-        "documentation": {}
-    },
-    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -223,15 +215,6 @@
         "description": "api.main",
         "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)",
         "detail": "api.main",
-        "documentation": {}
-    },
-    {
-        "label": "results",
-        "kind": 5,
-        "importPath": "test",
-        "description": "test",
-        "peekOfCode": "results = YoutubeSearch(\"nguoi la oi\", max_results=1).to_json()\nwith open(\"result.json\", \"w\") as f:\n    json.dump(json.loads(results), f)",
-        "detail": "test",
         "documentation": {}
     }
 ]
