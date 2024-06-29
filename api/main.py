@@ -7,19 +7,6 @@ from youtube_search import YoutubeSearch
 from deta import Deta
 
 
-class Song(BaseModel):
-    key: str
-    name: str
-    artist: str
-    url: str
-    cover: str
-
-
-class File(BaseModel):
-    name: str
-    data: bytes
-
-
 deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB")
 db = deta.Base("web-music")
 drive = deta.Drive("web-music")

@@ -118,24 +118,6 @@
         "documentation": {}
     },
     {
-        "label": "Song",
-        "kind": 6,
-        "importPath": "api.main",
-        "description": "api.main",
-        "peekOfCode": "class Song(BaseModel):\n    key: str\n    name: str\n    artist: str\n    url: str\n    cover: str\nclass File(BaseModel):\n    name: str\n    data: bytes\ndeta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")",
-        "detail": "api.main",
-        "documentation": {}
-    },
-    {
-        "label": "File",
-        "kind": 6,
-        "importPath": "api.main",
-        "description": "api.main",
-        "peekOfCode": "class File(BaseModel):\n    name: str\n    data: bytes\ndeta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\ndb = deta.Base(\"web-music\")\ndrive = deta.Drive(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}",
-        "detail": "api.main",
-        "documentation": {}
-    },
-    {
         "label": "music",
         "kind": 2,
         "importPath": "api.main",
