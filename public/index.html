@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
 
-  <body>
+  <body onload="loadPlaylist()">
     <h1>Dang Bao Tri</h1>
     <nav class="nav-extended">
       <div class="nav-wrapper">
@@ -35,7 +35,7 @@
         </div>
         <button
           class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
-          id="search-button"
+          id="search-button" onclick="loadSong()"
         >
           <i class="material-icons">add</i>
         </button>
