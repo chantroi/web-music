@@ -14,8 +14,7 @@ const ap = new APlayer({
 
 function loadPlayer(album) {
   album.forEach((data) => {
-    try {
-      const musicUrl = getMusic(data.path);
+    getMusic(`${data.name}.mp3`).then((musicUrl) => {
       const song = {
         name: data.name,
         artist: data.artist,
@@ -23,22 +22,21 @@ function loadPlayer(album) {
         cover: data.cover,
       };
       ap.list.add([song]);
-    } catch (err) {
-      console.log(`Error loading song ${data.name}:`, err);
-    }
+    });
   });
 }
 
 function loadPlaylist() {
-  try {
-    const response = fetch("https://webmusicapi.mywire.org/list");
-    const data = response.json();
-    data.forEach(function (songData) {
-      loadPlayer(songData);
+  fetch("https://webmusicapi.mywire.org/list")
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach(function (songData) {
+        loadPlayer(songData);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  } catch (err) {
-    console.log(err);
-  }
 }
 
 function loadSong() {
