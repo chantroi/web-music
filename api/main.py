@@ -5,7 +5,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from youtube_search import YoutubeSearch
 from deta import Deta
-from pydantic import BaseModel
 
 
 class Song(BaseModel):
@@ -73,11 +72,10 @@ def update_album():
     name = request.args.get("name")
     artist = request.args.get("artist")
     cover = request.args.get("cover")
-    song = Song(key=url, name=name, artist=artist, url=url, cover=cover)
+    song = dict(key=url, name=name, artist=artist, url=url, cover=cover)
     data = requests.get(dl_url).content
-    file = File(name=name, data=data)
-    drive.put_file(file)
     db.put(song)
+    drive.put_file(name=name, data=data)
     return jsonify(status="success")
 
 

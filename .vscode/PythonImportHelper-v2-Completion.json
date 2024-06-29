@@ -91,14 +91,6 @@
         "documentation": {}
     },
     {
-        "label": "BaseModel",
-        "importPath": "pydantic",
-        "description": "pydantic",
-        "isExtraImport": true,
-        "detail": "pydantic",
-        "documentation": {}
-    },
-    {
         "label": "music",
         "kind": 2,
         "importPath": "api.appwrite.main",
@@ -193,7 +185,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def update_album():\n    dl_url = request.args.get(\"dl\")\n    url = request.args.get(\"url\")\n    name = request.args.get(\"name\")\n    artist = request.args.get(\"artist\")\n    cover = request.args.get(\"cover\")\n    song = Song(key=url, name=name, artist=artist, url=url, cover=cover)\n    data = requests.get(dl_url).content\n    file = File(name=name, data=data)\n    drive.put_file(file)",
+        "peekOfCode": "def update_album():\n    dl_url = request.args.get(\"dl\")\n    url = request.args.get(\"url\")\n    name = request.args.get(\"name\")\n    artist = request.args.get(\"artist\")\n    cover = request.args.get(\"cover\")\n    song = dict(key=url, name=name, artist=artist, url=url, cover=cover)\n    data = requests.get(dl_url).content\n    db.put(song)\n    drive.put_file(name=name, data=data)",
         "detail": "api.main",
         "documentation": {}
     },
