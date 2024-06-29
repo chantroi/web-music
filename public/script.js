@@ -31,7 +31,7 @@ function loadPlayer(album) {
 
 function loadPlaylist() {
   try {
-    const response = fetch("https://webmusic1-se5r0bbh.b4a.run/list");
+    const response = fetch("https://webmusicapi.mywire.org/list");
     const data = response.json();
     data.forEach(function (songData) {
       loadPlayer(songData);
@@ -54,7 +54,7 @@ function loadSong() {
     });
 
   fetch(
-    `https://webmusic1-se5r0bbh.b4a.run/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}&dl=${data.url}`
+    `https://webmusicapi.mywire.org/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}&dl=${data.url}`
   )
     .then((response) => {
       response.json();
