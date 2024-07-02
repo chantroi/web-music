@@ -14,15 +14,15 @@ const ap = new APlayer({
 
 function loadPlayer(album) {
   album.forEach((data) => {
-    getMusic(`${data.name}.mp3`).then((musicUrl) => {
-      const song = {
-        name: data.name,
-        artist: data.artist,
-        url: musicUrl,
-        cover: data.cover,
-      };
-      ap.list.add([song]);
-    });
+    fetch(
+      `https://667e81b8759f2fa458e0.appwrite.global/?action=music&url=${data.url}`
+    )
+      .then((response) => {
+        response.json();
+      })
+      .then((data) => {
+        ap.list.add([song]);
+      });
   });
 }
 
@@ -52,7 +52,7 @@ function loadSong() {
     });
 
   fetch(
-    `https://webmusicapi.mywire.org/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}&dl=${data.url}`
+    `https://webmusicapi.mywire.org/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}`
   )
     .then((response) => {
       response.json();
