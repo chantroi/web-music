@@ -54,15 +54,12 @@ def get_music():
 
 @app.route("/add")
 def update_album():
-    dl_url = request.args.get("dl")
     url = request.args.get("url")
     name = request.args.get("name")
     artist = request.args.get("artist")
     cover = request.args.get("cover")
     song = dict(key=url, name=name, artist=artist, url=url, cover=cover)
-    data = requests.get(dl_url).content
     db.put(song)
-    drive.put_file(name=name, data=data)
     return jsonify(status="success")
 
 

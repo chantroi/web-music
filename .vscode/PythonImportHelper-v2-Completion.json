@@ -159,7 +159,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def update_album():\n    dl_url = request.args.get(\"dl\")\n    url = request.args.get(\"url\")\n    name = request.args.get(\"name\")\n    artist = request.args.get(\"artist\")\n    cover = request.args.get(\"cover\")\n    song = dict(key=url, name=name, artist=artist, url=url, cover=cover)\n    data = requests.get(dl_url).content\n    db.put(song)\n    drive.put_file(name=name, data=data)",
+        "peekOfCode": "def update_album():\n    url = request.args.get(\"url\")\n    name = request.args.get(\"name\")\n    artist = request.args.get(\"artist\")\n    cover = request.args.get(\"cover\")\n    song = dict(key=url, name=name, artist=artist, url=url, cover=cover)\n    db.put(song)\n    return jsonify(status=\"success\")\n@app.route(\"/list\")\ndef get_album():",
         "detail": "api.main",
         "documentation": {}
     },
