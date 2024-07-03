@@ -18,7 +18,7 @@ function loadPlayer(album) {
       .then((response) => {
         response.json();
       })
-      .then((data) => {
+      .then((song) => {
         ap.list.add([song]);
       });
   });
@@ -28,8 +28,8 @@ function loadPlaylist() {
   fetch("https://webmusic1-se5r0bbh.b4a.run/list")
     .then((response) => response.json())
     .then((data) => {
-      data.forEach(function (songData) {
-        loadPlayer(songData);
+      data.forEach((song) => {
+        loadPlayer(song);
       });
     })
     .catch((err) => {
@@ -45,9 +45,7 @@ function loadSong() {
     })
     .then((data) => {
       ap.list.add([data]);
-      fetch(
-        `https://webmusic1-se5r0bbh.b4a.run/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}`
-      );
+      fetch(`https://webmusic1-se5r0bbh.b4a.run/add?url=${link}`);
     })
     .catch((err) => {
       console.log(err);
