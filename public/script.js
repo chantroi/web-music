@@ -15,7 +15,7 @@ const ap = new APlayer({
 function loadPlayer(album) {
   album.forEach((data) => {
     fetch(
-      `https://webmusic1-se5r0bbh.b4a.run/get/?action=music&url=${data.url}`
+      `https://webmusic1-se5r0bbh.b4a.run/get?action=music&url=${data.url}`
     )
       .then((response) => {
         response.json();
@@ -42,7 +42,7 @@ function loadPlaylist() {
 function loadSong() {
   const link = document.querySelector("#search-box").value;
   fetch(
-    `https://webmusic1-se5r0bbh.b4a.run/get/?action=music&url=${link}`
+    `https://webmusic1-se5r0bbh.b4a.run/get?action=music&url=${link}`
   )
     .then((response) => {
       response.json();
