@@ -49,16 +49,18 @@ function loadSong() {
     })
     .then((data) => {
       ap.list.add([data]);
-    });
-
-  fetch(
-    `https://webmusic1-se5r0bbh.b4a.run/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}`
-  )
-    .then((response) => {
-      response.json();
-    })
-    .then((data) => {
-      console.log(data);
+      fetch(
+        `https://webmusic1-se5r0bbh.b4a.run/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}`
+      )
+        .then((response) => {
+          response.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
