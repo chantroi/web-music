@@ -34,6 +34,15 @@
         "documentation": {}
     },
     {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -132,7 +141,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    else:\n        return jsonify(status=\"error\", message=\"no keyword to search\")\n@app.route(\"/get\")\ndef get_music():\n    url = request.args.get(\"url\")\n    info = music(url)",
+        "peekOfCode": "def yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    else:\n        return jsonify(status=\"error\", message=\"no keyword to search\")\n@app.route(\"/get\")\ndef get_music():\n    url = request.args.get(\"url\")\n    action = request.args.get(\"action\")",
         "detail": "api.main",
         "documentation": {}
     },
@@ -141,7 +150,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    return jsonify(\n        url=info[\"url\"],\n        name=info[\"title\"],\n        artist=info.get(\"channel\"),\n        cover=info.get(\"thumbnail\"),\n    )\n@app.route(\"/add\")",
+        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    action = request.args.get(\"action\")\n    response = requests.get(\n        \"https://6684a5e6d2f82d8b8a60.appwrite.global\",\n        params={\"action\": action, \"url\": url},\n        timeout=30,\n    )\n    info = response.json()\n    return jsonify(info)",
         "detail": "api.main",
         "documentation": {}
     },
