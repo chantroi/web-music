@@ -48,7 +48,6 @@ function loadSong() {
       response.json();
     })
     .then((data) => {
-      ap.list.add([data]);
       fetch(
         `https://webmusic1-se5r0bbh.b4a.run/add?url=${link}&name=${data.name}&artist=${data.artist}&cover=${data.cover}`
       )
@@ -65,6 +64,7 @@ function loadSong() {
     .catch((err) => {
       console.log(err);
     });
+  ap.list.add([data]);
 
   document.querySelector("#search-box").value = "";
 }
