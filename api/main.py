@@ -1,5 +1,6 @@
 import json
 import yt_dlp
+import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from youtube_search import YoutubeSearch
@@ -42,13 +43,14 @@ def yt_search():
 @app.route("/get")
 def get_music():
     url = request.args.get("url")
-    info = music(url)
-    return jsonify(
-        url=info["url"],
-        name=info["title"],
-        artist=info.get("channel"),
-        cover=info.get("thumbnail"),
+    action = request.args.get("action")
+    response = requests.get(
+        "https://6684a5e6d2f82d8b8a60.appwrite.global",
+        params={"action": action, "url": url},
+        timeout=30,
     )
+    info = response.json()
+    return jsonify(info)
 
 
 @app.route("/add")
