@@ -34,15 +34,6 @@
         "documentation": {}
     },
     {
-        "label": "requests",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "requests",
-        "description": "requests",
-        "detail": "requests",
-        "documentation": {}
-    },
-    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -186,7 +177,7 @@
         "kind": 5,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "deta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\ndb = deta.Base(\"web-music\")\ndrive = deta.Drive(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict",
+        "peekOfCode": "deta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\ndb = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):",
         "detail": "api.main",
         "documentation": {}
     },
@@ -195,16 +186,7 @@
         "kind": 5,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "db = deta.Base(\"web-music\")\ndrive = deta.Drive(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):",
-        "detail": "api.main",
-        "documentation": {}
-    },
-    {
-        "label": "drive",
-        "kind": 5,
-        "importPath": "api.main",
-        "description": "api.main",
-        "peekOfCode": "drive = deta.Drive(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()",
+        "peekOfCode": "db = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()",
         "detail": "api.main",
         "documentation": {}
     },
