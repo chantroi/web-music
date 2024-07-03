@@ -1,5 +1,4 @@
 import json
-import requests
 import yt_dlp
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -9,7 +8,7 @@ from deta import Deta
 
 deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB")
 db = deta.Base("web-music")
-drive = deta.Drive("web-music")
+
 app = Flask(__name__)
 CORS(app)
 
