@@ -70,8 +70,7 @@ def get_album():
     result = db.get("playlist")
     if result.get("urls"):
         return jsonify(result["urls"])
-    else:
-        return jsonify([])
+    return jsonify(status="error")
 
 
 @app.route("/delete")
