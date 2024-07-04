@@ -57,10 +57,14 @@ def get_music():
 def update_album():
     url = request.args.get("url")
     playlist = db.get("playlist")
-    if url in playlist["urls"]:
-        pass
+    if playlist and playlist.get("urls"):
+        if url in playlist["urls"]:
+            pass
+        else:
+            playlist["urls"].append(url)
+            db.put(playlist)
     else:
-        playlist["urls"].append(url)
+        playlist = {"key": "playlist", "urls": [url]}
         db.put(playlist)
     return jsonify(status="success")
 
