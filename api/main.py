@@ -36,38 +36,46 @@ def yt_search():
     keyword = request.args.get("kw")
     if keyword:
         return jsonify(ytsearch(keyword))
-    else:
-        return jsonify(status="error", message="no keyword to search")
+    return jsonify(
+        status="error", message="no keyword to search", resolved=False, status_code=404
+    )
 
 
 @app.route("/get")
 def get_music():
     url = request.args.get("url")
-    action = request.args.get("action")
-    response = requests.get(
-        "https://6684a5e6d2f82d8b8a60.appwrite.global",
-        params={"action": action, "url": url},
-        timeout=30,
+    info = music(url)
+    return jsonify(
+        name=info["title"],
+        url=info["url"],
+        cover=info.get("thumbnail"),
+        artist=info.get("channel"),
     )
-    info = response.json()
-    return jsonify(info)
 
 
 @app.route("/add")
 def update_album():
     url = request.args.get("url")
-    db.put({"url": url})
+    playlist = db.get("playlist")
+    if url in playlist["urls"]:
+        pass
+    else:
+        playlist["urls"].append(url)
+        db.put(playlist)
     return jsonify(status="success")
 
 
 @app.route("/list")
 def get_album():
-    result = db.fetch().items
-    return jsonify(result)
+    result = db.get("playlist")
+    return jsonify(result["urls"])
 
 
 @app.route("/delete")
 def delete_music():
-    key = request.args.get("name")
-    db.delete(key)
+    url = request.args.get("url")
+    playlist = db.get("playlist")
+    if url in playlist["urls"]:
+        playlist["urls"].remove(url)
+        db.put(playlist)
     return jsonify(status="success")
