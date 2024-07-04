@@ -68,7 +68,10 @@ def update_album():
 @app.route("/list")
 def get_album():
     result = db.get("playlist")
-    return jsonify(result["urls"])
+    if result.get("urls"):
+        return jsonify(result["urls"])
+    else:
+        return jsonify([])
 
 
 @app.route("/delete")
