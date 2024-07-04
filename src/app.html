@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Common Media</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="keywords" content="Web Music" />
+    <meta name="description" content="Web music player" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+
+  <body onload="loadBody()">
+    <nav class="nav-extended">
+      <div class="nav-wrapper">
+        <div class="input-field">
+          <input id="search-box" type="text" name="url" />
+
+          <label class="label-icon" for="search-box"
+            ><i class="material-icons">search</i></label
+          >
+        </div>
+        <button
+          class="btn-floating btn-large halfway-fab waves-effect waves-light teal"
+          id="search-btn"
+        >
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+    </nav>
+    <br /><br />
+    <div class="row">
+      <div class="col s12 m7">
+        <div class="card">
+          <div id="player"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script src="script/main.js"></script>
+  </body>
+</html>
