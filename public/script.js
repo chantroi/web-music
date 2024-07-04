@@ -15,9 +15,7 @@ const ap = new APlayer({
 function loadPlayer(album) {
   album.forEach((data) => {
     fetch(`https://mydash-musicapi.hf.space/get?url=${data.url}`)
-      .then((response) => {
-        response.json();
-      })
+      .then((response) => response.json())
       .then((song) => {
         ap.list.add([song]);
       });
@@ -40,9 +38,7 @@ function loadPlaylist() {
 function loadSong() {
   const link = document.querySelector("#search-box").value;
   fetch(`https://mydash-musicapi.hf.space/get?url=${link}`)
-    .then((response) => {
-      response.json();
-    })
+    .then((response) => response.json())
     .then((data) => {
       ap.list.add([data]);
       fetch(`https://webmusic1-se5r0bbh.b4a.run/add?url=${link}`);
