@@ -41,9 +41,10 @@ function loadSong() {
     .then((response) => response.json())
     .then((data) => {
       ap.list.add([data]);
-      fetch(`https://webmusic1-se5r0bbh.b4a.run/add?url=${link}`);
+      fetch(`https://webmusic1-se5r0bbh.b4a.run/add?url=${link}`).catch(
+        (error) => console.error(error)
+      );
     })
-    .catch((error) => console.error(error))
     .catch((err) => console.log(err));
 
   document.querySelector("#search-box").value = "";
