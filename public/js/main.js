@@ -19,7 +19,7 @@ function loadBody() {
     .then((response) => response.json())
     .then((data) => {
       data.forEach((song) => {
-        loadPlayer(song);
+        playSong(song);
       });
     })
     .catch((err) => {
