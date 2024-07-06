@@ -1,5 +1,5 @@
-const API = "https://mydash-musicapi.hf.space";
-const Backend = "https://webmusic1-se5r0bbh.b4a.run";
+const API = "https://webmusicapi.mywire.org";
+const Backend = "https://webmusicapi.mywire.org";
 const Player = new APlayer({
   container: document.getElementById("player"),
   mini: false,
