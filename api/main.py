@@ -45,9 +45,10 @@ def yt_search():
 @app.route("/get")
 def get_music():
     url = request.args.get("url")
-    response = request.get(
+    response = requests.get(
         "http://6684a5e6d2f82d8b8a60.appwrite.global/",
         params={"action": "music", "url": url},
+        timeout=35,
     )
     info = response.json()
     return jsonify(
