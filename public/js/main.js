@@ -13,7 +13,6 @@ const Player = new APlayer({
   lrcType: 3,
   audio: [],
 });
-eruda.init();
 
 function loadBody() {
   fetch(`${Backend}/list`)
