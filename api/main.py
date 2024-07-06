@@ -1,3 +1,4 @@
+import os
 import json
 import yt_dlp
 import requests
@@ -7,7 +8,7 @@ from youtube_search import YoutubeSearch
 from deta import Deta
 
 
-deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB")
+deta = Deta(os.environ["DETA_KEY"])
 db = deta.Base("web-music")
 
 app = Flask(__name__)
@@ -44,12 +45,16 @@ def yt_search():
 @app.route("/get")
 def get_music():
     url = request.args.get("url")
-    info = music(url)
+    response = request.get(
+        "http://6684a5e6d2f82d8b8a60.appwrite.global/",
+        params={"action": "music", "url": url},
+    )
+    info = response.json()
     return jsonify(
-        name=info["title"],
+        name=info["name"],
         url=info["url"],
-        cover=info.get("thumbnail"),
-        artist=info.get("channel"),
+        cover=info.get("cover"),
+        artist=info.get("artist"),
     )
 
 
