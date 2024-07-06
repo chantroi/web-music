@@ -46,7 +46,7 @@ def yt_search():
 def get_music():
     url = request.args.get("url")
     response = requests.get(
-        "http://6684a5e6d2f82d8b8a60.appwrite.global/",
+        "https://6684a5e6d2f82d8b8a60.appwrite.global/",
         params={"action": "music", "url": url},
         timeout=35,
     )
