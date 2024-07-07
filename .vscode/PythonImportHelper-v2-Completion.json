@@ -34,6 +34,15 @@
         "documentation": {}
     },
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
@@ -132,7 +141,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def home():\n    return jsonify(page=\"home\")\n@app.route(\"/search\")\ndef yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    else:\n        return jsonify(status=\"error\", message=\"no keyword to search\")\n@app.route(\"/get\")",
+        "peekOfCode": "def home():\n    return jsonify(page=\"home\")\n@app.route(\"/search\")\ndef yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    return jsonify(\n        status=\"error\", message=\"no keyword to search\", resolved=False, status_code=404\n    )",
         "detail": "api.main",
         "documentation": {}
     },
@@ -141,7 +150,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    else:\n        return jsonify(status=\"error\", message=\"no keyword to search\")\n@app.route(\"/get\")\ndef get_music():\n    url = request.args.get(\"url\")\n    action = request.args.get(\"action\")",
+        "peekOfCode": "def yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    return jsonify(\n        status=\"error\", message=\"no keyword to search\", resolved=False, status_code=404\n    )\n@app.route(\"/get\")\ndef get_music():\n    url = request.args.get(\"url\")",
         "detail": "api.main",
         "documentation": {}
     },
@@ -150,7 +159,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    action = request.args.get(\"action\")\n    response = requests.get(\n        \"https://6684a5e6d2f82d8b8a60.appwrite.global\",\n        params={\"action\": action, \"url\": url},\n        timeout=30,\n    )\n    info = response.json()\n    return jsonify(info)",
+        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    response = requests.get(\n        \"https://6684a5e6d2f82d8b8a60.appwrite.global/\",\n        params={\"action\": \"music\", \"url\": url},\n        timeout=35,\n    )\n    info = response.json()\n    return jsonify(\n        name=info[\"name\"],",
         "detail": "api.main",
         "documentation": {}
     },
@@ -159,7 +168,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def update_album():\n    url = request.args.get(\"url\")\n    name = request.args.get(\"name\")\n    artist = request.args.get(\"artist\")\n    cover = request.args.get(\"cover\")\n    song = dict(key=url, name=name, artist=artist, url=url, cover=cover)\n    db.put(song)\n    return jsonify(status=\"success\")\n@app.route(\"/list\")\ndef get_album():",
+        "peekOfCode": "def update_album():\n    url = request.args.get(\"url\")\n    playlist = db.get(\"playlist\")\n    if playlist and playlist.get(\"urls\"):\n        if url in playlist[\"urls\"]:\n            pass\n        else:\n            playlist[\"urls\"].append(url)\n            db.put(playlist)\n    else:",
         "detail": "api.main",
         "documentation": {}
     },
@@ -168,7 +177,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_album():\n    result = db.fetch().items\n    return jsonify(result)\n@app.route(\"/delete\")\ndef delete_music():\n    key = request.args.get(\"name\")\n    db.delete(key)\n    return jsonify(status=\"success\")",
+        "peekOfCode": "def get_album():\n    result = db.get(\"playlist\")\n    if result.get(\"urls\"):\n        return jsonify(result[\"urls\"])\n    return jsonify(status=\"error\")\n@app.route(\"/delete\")\ndef delete_music():\n    url = request.args.get(\"url\")\n    playlist = db.get(\"playlist\")\n    if url in playlist[\"urls\"]:",
         "detail": "api.main",
         "documentation": {}
     },
@@ -177,7 +186,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def delete_music():\n    key = request.args.get(\"name\")\n    db.delete(key)\n    return jsonify(status=\"success\")",
+        "peekOfCode": "def delete_music():\n    url = request.args.get(\"url\")\n    playlist = db.get(\"playlist\")\n    if url in playlist[\"urls\"]:\n        playlist[\"urls\"].remove(url)\n        db.put(playlist)\n    return jsonify(status=\"success\")",
         "detail": "api.main",
         "documentation": {}
     },
@@ -186,7 +195,7 @@
         "kind": 5,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "deta = Deta(\"c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB\")\ndb = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):",
+        "peekOfCode": "deta = Deta(os.environ[\"DETA_KEY\"])\ndb = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):",
         "detail": "api.main",
         "documentation": {}
     },
