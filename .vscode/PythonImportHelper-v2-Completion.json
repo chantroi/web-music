@@ -1,5 +1,14 @@
 [
     {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "json",
         "kind": 6,
         "isExtraImport": true,
@@ -15,31 +24,6 @@
         "importPath": "yt_dlp",
         "description": "yt_dlp",
         "detail": "yt_dlp",
-        "documentation": {}
-    },
-    {
-        "label": "YoutubeSearch",
-        "importPath": "youtube_search",
-        "description": "youtube_search",
-        "isExtraImport": true,
-        "detail": "youtube_search",
-        "documentation": {}
-    },
-    {
-        "label": "YoutubeSearch",
-        "importPath": "youtube_search",
-        "description": "youtube_search",
-        "isExtraImport": true,
-        "detail": "youtube_search",
-        "documentation": {}
-    },
-    {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
         "documentation": {}
     },
     {
@@ -84,6 +68,14 @@
         "documentation": {}
     },
     {
+        "label": "YoutubeSearch",
+        "importPath": "youtube_search",
+        "description": "youtube_search",
+        "isExtraImport": true,
+        "detail": "youtube_search",
+        "documentation": {}
+    },
+    {
         "label": "Deta",
         "importPath": "deta",
         "description": "deta",
@@ -94,36 +86,18 @@
     {
         "label": "music",
         "kind": 2,
-        "importPath": "api.appwrite.main",
-        "description": "api.appwrite.main",
-        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\ndef main(ctx):\n    action = ctx.req.query.get(\"action\")",
-        "detail": "api.appwrite.main",
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info):\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",\n        \"name\": info[\"title\"],\n        \"cover\": info.get(\"thumbnail\"),",
+        "detail": "api.main",
         "documentation": {}
     },
     {
-        "label": "ytsearch",
-        "kind": 2,
-        "importPath": "api.appwrite.main",
-        "description": "api.appwrite.main",
-        "peekOfCode": "def ytsearch(kw):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\ndef main(ctx):\n    action = ctx.req.query.get(\"action\")\n    if action == \"search\":\n        kw = ctx.req.query.get(\"kw\")\n        result = ytsearch(ctx.req.query(kw))\n        return ctx.res.json(result)\n    elif action == \"music\":",
-        "detail": "api.appwrite.main",
-        "documentation": {}
-    },
-    {
-        "label": "main",
-        "kind": 2,
-        "importPath": "api.appwrite.main",
-        "description": "api.appwrite.main",
-        "peekOfCode": "def main(ctx):\n    action = ctx.req.query.get(\"action\")\n    if action == \"search\":\n        kw = ctx.req.query.get(\"kw\")\n        result = ytsearch(ctx.req.query(kw))\n        return ctx.res.json(result)\n    elif action == \"music\":\n        url = ctx.req.query.get(\"url\")\n        info = music(url)\n        return ctx.res.json(",
-        "detail": "api.appwrite.main",
-        "documentation": {}
-    },
-    {
-        "label": "music",
+        "label": "save_music",
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\n@app.route(\"/\")\ndef home():",
+        "peekOfCode": "def save_music(info):\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",\n        \"name\": info[\"title\"],\n        \"cover\": info.get(\"thumbnail\"),\n        \"artist\": info.get(\"channel\"),\n    }\n    db.put(content)\n    req = requests.get(info[\"url\"], timeout=100)\n    data = req.content",
         "detail": "api.main",
         "documentation": {}
     },
@@ -159,16 +133,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    response = requests.get(\n        \"https://6684a5e6d2f82d8b8a60.appwrite.global/\",\n        params={\"action\": \"music\", \"url\": url},\n        timeout=35,\n    )\n    info = response.json()\n    return jsonify(\n        name=info[\"name\"],",
-        "detail": "api.main",
-        "documentation": {}
-    },
-    {
-        "label": "update_album",
-        "kind": 2,
-        "importPath": "api.main",
-        "description": "api.main",
-        "peekOfCode": "def update_album():\n    url = request.args.get(\"url\")\n    playlist = db.get(\"playlist\")\n    if playlist and playlist.get(\"urls\"):\n        if url in playlist[\"urls\"]:\n            pass\n        else:\n            playlist[\"urls\"].append(url)\n            db.put(playlist)\n    else:",
+        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    save_music(info)\n    return jsonify(\n        key=info[\"title\"] + \".mp3\",\n    )\n@app.route(\"/list\")\ndef get_album():\n    result = db.list().items",
         "detail": "api.main",
         "documentation": {}
     },
@@ -177,7 +142,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_album():\n    result = db.get(\"playlist\")\n    if result.get(\"urls\"):\n        return jsonify(result[\"urls\"])\n    return jsonify(status=\"error\")\n@app.route(\"/delete\")\ndef delete_music():\n    url = request.args.get(\"url\")\n    playlist = db.get(\"playlist\")\n    if url in playlist[\"urls\"]:",
+        "peekOfCode": "def get_album():\n    result = db.list().items\n    return jsonify(result)\n@app.route(\"/delete\")\ndef delete_music():\n    key = request.args.get(\"key\")\n    db.delete(key)\n    drive.delete(key)\n    return jsonify(key=key, status=\"success\", action=\"delete\")",
         "detail": "api.main",
         "documentation": {}
     },
@@ -186,7 +151,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def delete_music():\n    url = request.args.get(\"url\")\n    playlist = db.get(\"playlist\")\n    if url in playlist[\"urls\"]:\n        playlist[\"urls\"].remove(url)\n        db.put(playlist)\n    return jsonify(status=\"success\")",
+        "peekOfCode": "def delete_music():\n    key = request.args.get(\"key\")\n    db.delete(key)\n    drive.delete(key)\n    return jsonify(key=key, status=\"success\", action=\"delete\")",
         "detail": "api.main",
         "documentation": {}
     },
@@ -195,7 +160,7 @@
         "kind": 5,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "deta = Deta(os.environ[\"DETA_KEY\"])\ndb = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):",
+        "peekOfCode": "deta = Deta(os.environ[\"DETA_KEY\"])\ndb = deta.Base(\"web-music\")\ndrive = deta.Drive(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict",
         "detail": "api.main",
         "documentation": {}
     },
@@ -204,7 +169,16 @@
         "kind": 5,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "db = deta.Base(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()",
+        "peekOfCode": "db = deta.Base(\"web-music\")\ndrive = deta.Drive(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info):",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "drive",
+        "kind": 5,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "drive = deta.Drive(\"web-music\")\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info):\n    content = {",
         "detail": "api.main",
         "documentation": {}
     },
@@ -213,7 +187,7 @@
         "kind": 5,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info):\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",",
         "detail": "api.main",
         "documentation": {}
     }

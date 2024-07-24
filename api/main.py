@@ -10,6 +10,7 @@ from deta import Deta
 
 deta = Deta(os.environ["DETA_KEY"])
 db = deta.Base("web-music")
+drive = deta.Drive("web-music")
 
 app = Flask(__name__)
 CORS(app)
@@ -20,6 +21,19 @@ def music(video_url):
     with yt_dlp.YoutubeDL(ydl_opts) as ydl:
         info_dict = ydl.extract_info(video_url, download=False)
         return info_dict
+
+
+def save_music(info):
+    content = {
+        "key": info["title"] + ".mp3",
+        "name": info["title"],
+        "cover": info.get("thumbnail"),
+        "artist": info.get("channel"),
+    }
+    db.put(content)
+    req = requests.get(info["url"], timeout=100)
+    data = req.content
+    drive.put(info["title"] + ".mp3", data)
 
 
 def ytsearch(kw: str):
@@ -45,49 +59,22 @@ def yt_search():
 @app.route("/get")
 def get_music():
     url = request.args.get("url")
-    response = requests.get(
-        "https://6684a5e6d2f82d8b8a60.appwrite.global/",
-        params={"action": "music", "url": url},
-        timeout=35,
-    )
-    info = response.json()
+    info = music(url)
+    save_music(info)
     return jsonify(
-        name=info["name"],
-        url=info["url"],
-        cover=info.get("cover"),
-        artist=info.get("artist"),
+        key=info["title"] + ".mp3",
     )
-
-
-@app.route("/add")
-def update_album():
-    url = request.args.get("url")
-    playlist = db.get("playlist")
-    if playlist and playlist.get("urls"):
-        if url in playlist["urls"]:
-            pass
-        else:
-            playlist["urls"].append(url)
-            db.put(playlist)
-    else:
-        playlist = {"key": "playlist", "urls": [url]}
-        db.put(playlist)
-    return jsonify(status="success")
 
 
 @app.route("/list")
 def get_album():
-    result = db.get("playlist")
-    if result.get("urls"):
-        return jsonify(result["urls"])
-    return jsonify(status="error")
+    result = db.list().items
+    return jsonify(result)
 
 
 @app.route("/delete")
 def delete_music():
-    url = request.args.get("url")
-    playlist = db.get("playlist")
-    if url in playlist["urls"]:
-        playlist["urls"].remove(url)
-        db.put(playlist)
-    return jsonify(status="success")
+    key = request.args.get("key")
+    db.delete(key)
+    drive.delete(key)
+    return jsonify(key=key, status="success", action="delete")
