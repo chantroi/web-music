@@ -29,6 +29,7 @@ async function loadBody() {
   const data = await res.json();
   for (const song of data) {
     song.url = await getURL(song.key);
+    Player.list.add(song);
   }
 }
 async function loadSong(e) {
