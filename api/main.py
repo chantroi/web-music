@@ -68,7 +68,7 @@ def get_music():
 
 @app.route("/list")
 def get_album():
-    result = db.list().items
+    result = db.fetch().items
     return jsonify(result)
 
 
