@@ -1,5 +1,6 @@
+import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
+
 const API = "https://webmusicapi.mywire.org";
-const Backend = "https://webmusicapi.mywire.org";
 const Player = new APlayer({
   container: document.getElementById("player"),
   mini: false,
@@ -13,35 +14,35 @@ const Player = new APlayer({
   lrcType: 3,
   audio: [],
 });
+const deta = Deta();
+const db = deta.Base("web-music");
+const drive = deta.Drive("web-music");
 
-function loadBody() {
-  fetch(`${Backend}/list`)
-    .then((response) => response.json())
-    .then((data) => {
-      data.forEach((song) => {
-        playSong(song);
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+async function getURL(name) {
+  const data = await drive.get(name);
+  const blob = new Blob([data], { type: "audio/mpeg" });
+  const url = URL.createObjectURL(blob);
+  return url;
 }
-function playSong(link) {
-  fetch(`${API}/get?url=${link}`)
-    .then((response) => response.json())
-    .then((data) => {
-      Player.list.add([data]);
-    })
-    .catch((err) => console.log(err));
+async function loadBody() {
+  const res = await fetch(`${API}/list`);
+  const data = await res.json();
+  for (const song of data) {
+    song.url = await getURL(song.key);
+  }
+}
+async function loadSong(e) {
+  const searchBox = document.getElementById("search-box");
+  const content = searchBox.value;
+  if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
+    const res = await fetch(`${API}/get?url=${content}`);
+    const data = await res.json();
+    const songKey = data.key;
+    const song = await db.get(songKey);
+    song.url = await getURL(songKey);
+    Player.list.add(song);
+  }
 }
 
-function saveUrl(link) {
-  fetch(`${Backend}/add?url=${link}`).catch((error) => console.error(error));
-  document.querySelector("#search-box").value = "";
-}
-
-document.getElementById("search-btn").addEventListener("click", (e) => {
-  const link = document.getElementById("search-box").value;
-  saveUrl(link);
-  playSong(link);
-});
+document.addEventListener("DOMContentLoaded", loadBody);
+document.getElementById("search-btn").addEventListener("click", loadSong);
