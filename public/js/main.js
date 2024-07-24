@@ -37,10 +37,7 @@ async function loadSong(e) {
   const content = searchBox.value;
   if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
     const res = await fetch(`${API}/get?url=${content}`);
-    const data = await res.json();
-    const songKey = data.key;
-    const song = await db.get(songKey);
-    song.url = await getURL(songKey);
+    const song = await res.json();
     Player.list.add(song);
   }
 }

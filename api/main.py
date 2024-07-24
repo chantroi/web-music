@@ -1,5 +1,6 @@
 import os
 import json
+import threading
 import yt_dlp
 import requests
 from flask import Flask, request, jsonify
@@ -60,9 +61,12 @@ def yt_search():
 def get_music():
     url = request.args.get("url")
     info = music(url)
-    save_music(info)
+    threading.Thread(target=save_music, args=(info,)).start()
     return jsonify(
-        key=info["title"] + ".mp3",
+        name=info["title"],
+        cover=info.get("thumbnail"),
+        artist=info.get("channel"),
+        url=info["url"],
     )
 
 
