@@ -1,4 +1,6 @@
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
+import "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js";
+import APlayer from 'aplayer';
 
 const API = "https://webmusicapi.mywire.org";
 const Player = new APlayer({
