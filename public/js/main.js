@@ -1,6 +1,4 @@
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
-import "https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js";
-import APlayer from 'aplayer';
 
 const API = "https://webmusicapi.mywire.org";
 const Player = new APlayer({
@@ -16,7 +14,7 @@ const Player = new APlayer({
   lrcType: 3,
   audio: [],
 });
-const deta = Deta();
+const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
 const db = deta.Base("web-music");
 const drive = deta.Drive("web-music");
 
