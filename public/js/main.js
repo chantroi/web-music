@@ -15,7 +15,7 @@ const Player = new APlayer({
   audio: [],
 });
 const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
-const db = deta.Base("web-music");
+
 const drive = deta.Drive("web-music");
 
 async function getURL(name) {
@@ -24,14 +24,19 @@ async function getURL(name) {
   const url = URL.createObjectURL(blob);
   return url;
 }
+
 async function loadBody() {
   const res = await fetch(`${API}/list`);
   const data = await res.json();
-  for (const song of data) {
+
+  const promises = data.map(async (song) => {
     song.url = await getURL(song.key);
     Player.list.add(song);
-  }
+  });
+
+  await Promise.all(promises);
 }
+
 async function loadSong(e) {
   const searchBox = document.getElementById("search-box");
   const content = searchBox.value;
