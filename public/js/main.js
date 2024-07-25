@@ -15,7 +15,7 @@ const Player = new APlayer({
   audio: [],
 });
 const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
-
+const base = deta.Base("web-music");
 const drive = deta.Drive("web-music");
 
 async function getURL(name) {
@@ -42,7 +42,9 @@ async function loadSong(e) {
   const content = searchBox.value;
   if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
     const res = await fetch(`${API}/get?url=${content}`);
-    const song = await res.json();
+    const data = await res.json();
+    const song = await base.get(data.key);
+    song.url = await getURL(data.key);
     Player.list.add(song);
   }
 }
