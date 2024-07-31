@@ -3,7 +3,6 @@ import "./style.css";
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
 import APlayer from "aplayer";
 
-const app = document.querySelector("#app");
 const API = "https://webmusicapi.mywire.org";
 const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
 const base = deta.Base("web-music");
@@ -40,27 +39,7 @@ async function loadSong(e) {
   }
 }
 
-const ContentBody = `<nav class="nav-extended">
-        <div class="nav-wrapper">
-          <div class="input-field">
-            <input id="search-box" type="text" name="url" />
-            <label class="label-icon" for="search-box"
-              ><i class="material-icons">search</i></label
-            >
-          </div>
-          <button id="search-btn">
-            <i class="material-icons">add</i>
-          </button>
-        </div>
-      </nav>
-      <div class="row">
-        <div class="card">
-          <div id="player"></div>
-        </div>
-      </div>`;
-
 document.addEventListener("DOMContentLoaded", function () {
-  app.innerHTML = ContentBody;
   Player = new APlayer({
     container: document.getElementById("player"),
     mini: false,

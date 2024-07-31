@@ -11,7 +11,24 @@
     <title>Music Collection</title>
   </head>
   <body>
-    <div id="app"></div>
+    <nav class="nav-extended">
+      <div class="nav-wrapper">
+        <div class="input-field">
+          <input id="search-box" type="text" name="url" />
+          <label class="label-icon" for="search-box"
+            ><i class="material-icons">search</i></label
+          >
+        </div>
+        <button id="search-btn">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+    </nav>
+    <div class="row">
+      <div class="card">
+        <div id="player"></div>
+      </div>
+    </div>
     <script src="//cdn.jsdelivr.net/npm/eruda"></script>
     <script>
       eruda.init();
