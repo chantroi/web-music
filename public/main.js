@@ -41,8 +41,7 @@ async function loadBody() {
 }
 
 async function loadSong(e) {
-  const searchBox = document.getElementById("search-box");
-  const content = searchBox.value;
+  const content = prompt("Enter the URL");
   if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
     const res = await fetch(`${API}/get?url=${content}`);
     const data = await res.json();
