@@ -8,9 +8,12 @@ from youtube_search import YoutubeSearch
 from deta import Deta
 
 
-deta = Deta(os.environ["DETA_KEY"])
-db = deta.Base("web-music")
-drive = deta.Drive("web-music")
+def obj():
+    deta = Deta(os.environ["DETA_KEY"])
+    db = deta.Base("web-music")
+    drive = deta.Drive("web-music")
+    return db, drive
+
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +27,7 @@ def music(video_url):
 
 
 def save_music(info):
+    db, drive = obj()
     content = {
         "key": info["title"] + ".mp3",
         "name": info["title"],
@@ -66,12 +70,14 @@ def get_music():
 
 @app.route("/list")
 def get_album():
+    db, _ = obj()
     result = db.fetch().items
     return jsonify(result)
 
 
 @app.route("/delete")
 def delete_music():
+    db, drive = obj()
     key = request.args.get("key")
     db.delete(key)
     drive.delete(key)
