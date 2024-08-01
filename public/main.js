@@ -6,10 +6,8 @@ import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
 const API = "https://webmusicapi.mywire.org";
 const Player = new APlayer({
   container: document.getElementById("player"),
-  mini: false,
   autoplay: true,
   theme: "#FADFA3",
-  preload: "auto",
   fixed: true,
   lrcType: 3,
   audio: [],
