@@ -33,6 +33,7 @@ async function loadBody() {
   });
 
   await Promise.all(promises);
+  Player.list.show();
 }
 
 async function loadSong(e) {
