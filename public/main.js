@@ -10,11 +10,7 @@ const Player = new APlayer({
   autoplay: true,
   theme: "#FADFA3",
   preload: "auto",
-  volume: 1,
   fixed: true,
-  mutex: true,
-  listFolded: true,
-  listMaxHeight: 90,
   lrcType: 3,
   audio: [],
 });
