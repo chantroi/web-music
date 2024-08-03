@@ -1,4 +1,5 @@
 import "./style.css";
+import "./1722653378772.png";
 import "aplayer/dist/APlayer.min.css";
 import APlayer from "aplayer";
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
