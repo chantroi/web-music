@@ -49,7 +49,7 @@ async function loadSong(e) {
 }
 
 Player.on("play", function () {
-  const picSrc = APlayer.audio[Player.playlistIndex].cover;
+  const picSrc = APlayer.audio[0].cover;
   appContent.style.backgroundImage = `url("${picSrc}")`;
 });
 
