@@ -48,8 +48,8 @@ async function loadSong(e) {
 }
 
 Player.on("play", async (e) => {
-  document.title = e.name;
-  document.body.style.backgroundImage = `url("${e.audio.cover}")`;
+  const picSrc = document.querySelector("#aplayer-pic").style.backgroundImage;
+  document.body.style.backgroundImage = picSrc;
 });
 
 document.addEventListener("DOMContentLoaded", loadBody);
