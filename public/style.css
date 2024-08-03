@@ -4,7 +4,6 @@ body {
   color: black;
   margin: 0;
   padding: 0;
-  background-image: image("1722653378772.png")
 }
 @media (prefers-color-scheme: dark) {
   body {

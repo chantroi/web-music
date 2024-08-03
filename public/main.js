@@ -25,6 +25,7 @@ async function getURL(name) {
 }
 
 async function loadBody() {
+  document.body.style.backgroundImage = "url('./1722653378772.png')";
   const res = await fetch(`${API}/list`);
   const data = await res.json();
 
