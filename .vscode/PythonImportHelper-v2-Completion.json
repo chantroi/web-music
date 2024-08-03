@@ -160,7 +160,16 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def delete_music():\n    db, drive = obj()\n    key = request.args.get(\"key\")\n    db.delete(key)\n    drive.delete(key)\n    return jsonify(key=key, status=\"success\", action=\"delete\")",
+        "peekOfCode": "def delete_music():\n    db, drive = obj()\n    key = request.args.get(\"key\")\n    db.delete(key)\n    drive.delete(key)\n    return jsonify(key=key, status=\"success\", action=\"delete\")\n@app.route(\"/comments\")\ndef get_comments():\n    deta = Deta(os.environ[\"DETA_KEY\"])\n    db = deta.Base(\"comments\")",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "get_comments",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def get_comments():\n    deta = Deta(os.environ[\"DETA_KEY\"])\n    db = deta.Base(\"comments\")\n    result = db.fetch().items\n    return jsonify(result)",
         "detail": "api.main",
         "documentation": {}
     },
