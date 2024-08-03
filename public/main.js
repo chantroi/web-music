@@ -16,6 +16,7 @@ const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
 const base = deta.Base("web-music");
 const drive = deta.Drive("web-music");
 const appContent = document.body;
+const commentDiv = document.getElementById("comment");
 
 async function getURL(name) {
   const data = await drive.get(name);
