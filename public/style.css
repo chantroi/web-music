@@ -4,6 +4,7 @@ body {
   color: black;
   margin: 0;
   padding: 0;
+  background-image: image("https://picsum.photos/200/300");
 }
 @media (prefers-color-scheme: dark) {
   body {
