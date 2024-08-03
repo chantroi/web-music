@@ -1,5 +1,4 @@
 import "./style.css";
-import "./1722653378772.png";
 import "aplayer/dist/APlayer.min.css";
 import APlayer from "aplayer";
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
@@ -25,7 +24,6 @@ async function getURL(name) {
 }
 
 async function loadBody() {
-  document.body.style.backgroundImage = "url('./1722653378772.png')";
   const res = await fetch(`${API}/list`);
   const data = await res.json();
 
@@ -49,9 +47,14 @@ async function loadSong(e) {
   }
 }
 
-Player.on("play", async (e) => {
-  const picSrc = document.querySelector("#aplayer-pic").style.backgroundImage;
-  document.body.style.backgroundImage = picSrc;
+Player.on("play", async () => {
+  const picSrc = APlayer.list[0].cover;
+  document.body.style.backgroundImage = `url("${picSrc}")`;
+});
+
+Player.on("listswitch", async (i) => {
+  const picSrc = APlayer.list[i].cover;
+  document.body.style.backgroundImage = `url("${picSrc}")`;
 });
 
 document.addEventListener("DOMContentLoaded", loadBody);
