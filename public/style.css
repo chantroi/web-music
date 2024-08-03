@@ -73,11 +73,13 @@ body {
 }
 .card {
   background-color: white;
+  border-color: #f40707;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 100%;
   max-width: 600px;
+  
 }
 .comment {
   background-color: white;

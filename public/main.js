@@ -51,7 +51,7 @@ async function loadComments() {
 }
 
 async function loadSong(e) {
-  const content = prompt("Enter the URL");
+  const content = prompt("Nhập link bản nhạc:");
   if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
     const res = await fetch(`${API}/get?url=${content}`);
     const data = await res.json();
