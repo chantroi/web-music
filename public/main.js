@@ -47,5 +47,10 @@ async function loadSong(e) {
   }
 }
 
+Player.on("play", async (e) => {
+  document.title = e.name;
+  document.body.style.backgroundImage = `url("${e.cover}")`;
+});
+
 document.addEventListener("DOMContentLoaded", loadBody);
 document.getElementById("search-btn").addEventListener("click", loadSong);
