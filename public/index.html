@@ -13,16 +13,31 @@
   <body>
     <nav class="nav-extended">
       <h1 class="nav-title">Music Collection</h1>
+
       <div class="nav-wrapper">
         <button id="search-btn">
           <i class="material-icons">add</i>
           Add Music
         </button>
+
+        <button id="comment-btn">
+          <i class="material-icons">comment</i>Comment
+        </button>
       </div>
     </nav>
+    <div class="image-container">
+      <img id="cover-rotating-image"
+        src="cover.jpg"
+        alt="Cover"
+        class="rotating-image"
+      />
+    </div>
     <div id="player"></div>
     <div class="row">
-      <div class="card" id="comment"></div>
+      <div class="card" id="comment">
+        <div>
+        </div>
+      </div>
     </div>
 
     <script type="module" src="/main.js"></script>

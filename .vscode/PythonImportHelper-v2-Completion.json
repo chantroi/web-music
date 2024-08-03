@@ -1,0 +1,176 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "yt_dlp",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yt_dlp",
+        "description": "yt_dlp",
+        "detail": "yt_dlp",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "CORS",
+        "importPath": "flask_cors",
+        "description": "flask_cors",
+        "isExtraImport": true,
+        "detail": "flask_cors",
+        "documentation": {}
+    },
+    {
+        "label": "YoutubeSearch",
+        "importPath": "youtube_search",
+        "description": "youtube_search",
+        "isExtraImport": true,
+        "detail": "youtube_search",
+        "documentation": {}
+    },
+    {
+        "label": "Deta",
+        "importPath": "deta",
+        "description": "deta",
+        "isExtraImport": true,
+        "detail": "deta",
+        "documentation": {}
+    },
+    {
+        "label": "obj",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def obj():\n    deta = Deta(os.environ[\"DETA_KEY\"])\n    db = deta.Base(\"web-music\")\n    drive = deta.Drive(\"web-music\")\n    return db, drive\napp = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "music",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info):\n    db, drive = obj()\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",\n        \"name\": info[\"title\"],",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "save_music",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def save_music(info):\n    db, drive = obj()\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",\n        \"name\": info[\"title\"],\n        \"cover\": info.get(\"thumbnail\"),\n        \"artist\": info.get(\"channel\"),\n    }\n    db.put(content)\n    req = requests.get(info[\"url\"], timeout=100)",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "ytsearch",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def ytsearch(kw: str):\n    results = YoutubeSearch(kw, max_results=5).to_json()\n    return json.loads(results)\n@app.route(\"/\")\ndef home():\n    return jsonify(page=\"home\")\n@app.route(\"/search\")\ndef yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "home",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def home():\n    return jsonify(page=\"home\")\n@app.route(\"/search\")\ndef yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    return jsonify(\n        status=\"error\", message=\"no keyword to search\", resolved=False, status_code=404\n    )",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "yt_search",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def yt_search():\n    keyword = request.args.get(\"kw\")\n    if keyword:\n        return jsonify(ytsearch(keyword))\n    return jsonify(\n        status=\"error\", message=\"no keyword to search\", resolved=False, status_code=404\n    )\n@app.route(\"/get\")\ndef get_music():\n    url = request.args.get(\"url\")",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "get_music",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    info = music(url)\n    save_music(info)\n    return jsonify(key=info[\"title\"] + \".mp3\")\n@app.route(\"/list\")\ndef get_album():\n    db, _ = obj()\n    result = db.fetch().items\n    return jsonify(result)",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "get_album",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def get_album():\n    db, _ = obj()\n    result = db.fetch().items\n    return jsonify(result)\n@app.route(\"/delete\")\ndef delete_music():\n    db, drive = obj()\n    key = request.args.get(\"key\")\n    db.delete(key)\n    drive.delete(key)",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "delete_music",
+        "kind": 2,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "def delete_music():\n    db, drive = obj()\n    key = request.args.get(\"key\")\n    db.delete(key)\n    drive.delete(key)\n    return jsonify(key=key, status=\"success\", action=\"delete\")",
+        "detail": "api.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "api.main",
+        "description": "api.main",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info):\n    db, drive = obj()\n    content = {",
+        "detail": "api.main",
+        "documentation": {}
+    }
+]

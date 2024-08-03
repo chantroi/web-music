@@ -82,3 +82,11 @@ def delete_music():
     db.delete(key)
     drive.delete(key)
     return jsonify(key=key, status="success", action="delete")
+
+
+@app.route("/comments")
+def get_comments():
+    deta = Deta(os.environ["DETA_KEY"])
+    db = deta.Base("comments")
+    result = db.fetch().items
+    return jsonify(result)
