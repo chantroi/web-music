@@ -15,6 +15,7 @@ const Player = new APlayer({
 const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
 const base = deta.Base("web-music");
 const drive = deta.Drive("web-music");
+const appContent = document.querySelector("#app");
 
 async function getURL(name) {
   const data = await drive.get(name);
@@ -49,12 +50,12 @@ async function loadSong(e) {
 
 Player.on("play", async () => {
   const picSrc = APlayer.list[0].cover;
-  document.body.style.backgroundImage = `url("${picSrc}")`;
+  appContent.style.backgroundImage = `url("${picSrc}")`;
 });
 
 Player.on("listswitch", async (i) => {
   const picSrc = APlayer.list[i].cover;
-  document.body.style.backgroundImage = `url("${picSrc}")`;
+  appContent.style.backgroundImage = `url("${picSrc}")`;
 });
 
 document.addEventListener("DOMContentLoaded", loadBody);
