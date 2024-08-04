@@ -8,14 +8,20 @@ from youtube_search import YoutubeSearch
 from deta import Deta
 
 
-def obj(album):
-    deta = Deta(os.environ["DETA_KEY"])
-    if album == "common":
-        db = deta.Base("web-music")
-    else:
-        db = deta.Base(f"web-music-{album}")
-    drive = deta.Drive("web-music")
-    return db, drive
+class DetaObj:
+    def __init__(self):
+        self.deta = Deta(os.environ["DETA_KEY"])
+
+    def albums(self):
+        return self.deta.Base("albums")
+
+    def album(self, album_name):
+        for i in self.albums().fetch().items:
+            if i["key"] == f"web-music-{album_name}":
+                return self.deta.Base(f"web-music-{i['key']}")
+
+    def drive(self):
+        return self.deta.Drive("web-music")
 
 
 app = Flask(__name__)
@@ -29,8 +35,10 @@ def music(video_url):
         return info_dict
 
 
-def save_music(info, album="common"):
-    db, drive = obj(album)
+def save_music(info, album):
+    deta = DetaObj()
+    db = deta.album(album)
+    drive = deta.drive()
     content = {
         "key": info["title"] + ".mp3",
         "name": info["title"],
@@ -74,12 +82,13 @@ def get_music():
 
 @app.route("/list")
 def get_album():
+    deta = DetaObj()
     album = request.args.get("a")
     if album:
-        db, drive = obj(album)
+        db = deta.album(album)
         result = db.fetch().items
         return jsonify(result)
-    db = Deta(os.environ["DETA_KEY"]).Base("albums")
+    db = deta.albums()
     result = db.fetch().items
     return jsonify(result)
 
@@ -88,19 +97,22 @@ def get_album():
 def add_album():
     album = request.args.get("a")
     if album:
-        db = Deta(os.environ["DETA_KEY"]).Base("albums")
-        db.put({"name": album, "key": f"web-music-{album}"})
-        return jsonify(status="success", action="add")
+        deta = DetaObj()
+        db = deta.album(album)
+        album = db.put({"name": album})
+        return jsonify(
+            status="success", action="add", key=album["key"], name=album["name"]
+        )
     return jsonify(status="error", action="add")
 
 
 @app.route("/delete")
 def delete_music():
     album = request.args.get("a")
-    db, drive = obj(album)
+    deta = DetaObj()
+    db = deta.album(album)
     key = request.args.get("key")
     db.delete(key)
-    drive.delete(key)
     return jsonify(key=key, status="success", action="delete")
 
 

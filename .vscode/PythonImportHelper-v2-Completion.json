@@ -84,11 +84,11 @@
         "documentation": {}
     },
     {
-        "label": "obj",
-        "kind": 2,
+        "label": "DetaObj",
+        "kind": 6,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def obj(album):\n    deta = Deta(os.environ[\"DETA_KEY\"])\n    if album == \"common\":\n        db = deta.Base(\"web-music\")\n    else:\n        db = deta.Base(f\"web-music-{album}\")\n    drive = deta.Drive(\"web-music\")\n    return db, drive\napp = Flask(__name__)\nCORS(app)",
+        "peekOfCode": "class DetaObj:\n    def __init__(self):\n        self.deta = Deta(os.environ[\"DETA_KEY\"])\n    def albums(self):\n        return self.deta.Base(\"albums\")\n    def album(self, album_name):\n        for i in self.albums().fetch().items:\n            if i[\"key\"] == f\"web-music-{album_name}\":\n                return self.deta.Base(f\"web-music-{i['key']}\")\n    def drive(self):",
         "detail": "api.main",
         "documentation": {}
     },
@@ -97,7 +97,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info, album=\"common\"):\n    db, drive = obj(album)\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",\n        \"name\": info[\"title\"],",
+        "peekOfCode": "def music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info, album):\n    deta = DetaObj()\n    db = deta.album(album)\n    drive = deta.drive()\n    content = {",
         "detail": "api.main",
         "documentation": {}
     },
@@ -106,7 +106,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def save_music(info, album=\"common\"):\n    db, drive = obj(album)\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",\n        \"name\": info[\"title\"],\n        \"cover\": info.get(\"thumbnail\"),\n        \"artist\": info.get(\"channel\"),\n    }\n    db.put(content)\n    req = requests.get(info[\"url\"], timeout=100)",
+        "peekOfCode": "def save_music(info, album):\n    deta = DetaObj()\n    db = deta.album(album)\n    drive = deta.drive()\n    content = {\n        \"key\": info[\"title\"] + \".mp3\",\n        \"name\": info[\"title\"],\n        \"cover\": info.get(\"thumbnail\"),\n        \"artist\": info.get(\"channel\"),\n    }",
         "detail": "api.main",
         "documentation": {}
     },
@@ -142,7 +142,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    album = request.args.get(\"a\")\n    info = music(url)\n    save_music(info, album)\n    return jsonify(key=info[\"title\"] + \".mp3\")\n@app.route(\"/list\")\ndef get_album():\n    album = request.args.get(\"a\")\n    if album:",
+        "peekOfCode": "def get_music():\n    url = request.args.get(\"url\")\n    album = request.args.get(\"a\")\n    info = music(url)\n    save_music(info, album)\n    return jsonify(key=info[\"title\"] + \".mp3\")\n@app.route(\"/list\")\ndef get_album():\n    deta = DetaObj()\n    album = request.args.get(\"a\")",
         "detail": "api.main",
         "documentation": {}
     },
@@ -151,7 +151,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_album():\n    album = request.args.get(\"a\")\n    if album:\n        db, drive = obj(album)\n        result = db.fetch().items\n        return jsonify(result)\n    db = Deta(os.environ[\"DETA_KEY\"]).Base(\"albums\")\n    result = db.fetch().items\n    return jsonify(result)\n@app.route(\"/list/create\")",
+        "peekOfCode": "def get_album():\n    deta = DetaObj()\n    album = request.args.get(\"a\")\n    if album:\n        db = deta.album(album)\n        result = db.fetch().items\n        return jsonify(result)\n    db = deta.albums()\n    result = db.fetch().items\n    return jsonify(result)",
         "detail": "api.main",
         "documentation": {}
     },
@@ -160,7 +160,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def add_album():\n    album = request.args.get(\"a\")\n    if album:\n        db = Deta(os.environ[\"DETA_KEY\"]).Base(\"albums\")\n        db.put({\"name\": album, \"key\": f\"web-music-{album}\"})\n        return jsonify(status=\"success\", action=\"add\")\n    return jsonify(status=\"error\", action=\"add\")\n@app.route(\"/delete\")\ndef delete_music():\n    album = request.args.get(\"a\")",
+        "peekOfCode": "def add_album():\n    album = request.args.get(\"a\")\n    if album:\n        deta = DetaObj()\n        db = deta.album(album)\n        album = db.put({\"name\": album})\n        return jsonify(\n            status=\"success\", action=\"add\", key=album[\"key\"], name=album[\"name\"]\n        )\n    return jsonify(status=\"error\", action=\"add\")",
         "detail": "api.main",
         "documentation": {}
     },
@@ -169,7 +169,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def delete_music():\n    album = request.args.get(\"a\")\n    db, drive = obj(album)\n    key = request.args.get(\"key\")\n    db.delete(key)\n    drive.delete(key)\n    return jsonify(key=key, status=\"success\", action=\"delete\")\n@app.route(\"/comments\")\ndef get_comments():\n    deta = Deta(os.environ[\"DETA_KEY\"])",
+        "peekOfCode": "def delete_music():\n    album = request.args.get(\"a\")\n    deta = DetaObj()\n    db = deta.album(album)\n    key = request.args.get(\"key\")\n    db.delete(key)\n    return jsonify(key=key, status=\"success\", action=\"delete\")\n@app.route(\"/comments\")\ndef get_comments():\n    deta = Deta(os.environ[\"DETA_KEY\"])",
         "detail": "api.main",
         "documentation": {}
     },
@@ -187,7 +187,7 @@
         "kind": 5,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info, album=\"common\"):\n    db, drive = obj(album)\n    content = {",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app)\ndef music(video_url):\n    ydl_opts = {\"format\": \"bestaudio/best\"}\n    with yt_dlp.YoutubeDL(ydl_opts) as ydl:\n        info_dict = ydl.extract_info(video_url, download=False)\n        return info_dict\ndef save_music(info, album):\n    deta = DetaObj()\n    db = deta.album(album)",
         "detail": "api.main",
         "documentation": {}
     }

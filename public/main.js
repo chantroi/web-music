@@ -4,7 +4,7 @@ import APlayer from "aplayer";
 import AudioMotionAnalyzer from "audiomotion-analyzer";
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
 
-let currentAlbum = "common";
+let currentAlbum = "Common";
 const API = "https://webmusicapi.mywire.org";
 const Player = new APlayer({
   container: document.getElementById("player"),
@@ -31,19 +31,12 @@ const audioMotion = new AudioMotionAnalyzer(document.getElementById("wave"), {
 });
 
 const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
-let base = deta.Base("web-music");
 const commentBase = deta.Base("comments");
 const drive = deta.Drive("web-music");
+let base = deta.Base("web-music");
+
 const musicTitle = document.getElementById("music-title");
 let userName;
-
-async function reloadBase() {
-  if (currentAlbum === "common") {
-    base = deta.Base("web-music");
-  } else {
-    base = deta.Base(`web-music-${currentAlbum}`);
-  }
-}
 
 async function getURL(name) {
   const data = await drive.get(name);
@@ -105,10 +98,12 @@ async function openAlbums() {
     for (const album of data) {
       const albumElement = document.createElement("li");
       albumElement.id = "album-action";
-      albumElement.innerHTML = `<a name="${album.name}">${album.name}</a>`;
+      albumElement.innerHTML = `<a name="${album.name}" base="${album.key}">${album.name}</a>`;
       albumContainer.appendChild(albumElement);
       albumElement.addEventListener("click", async (e) => {
         currentAlbum = e.target.getAttribute("name");
+        const baseName = e.target.getAttribute("base");
+        base = deta.Base(baseName);
         await loadBody();
       });
     }
