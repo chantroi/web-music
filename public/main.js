@@ -111,12 +111,13 @@ document.querySelector("#comment-btn").addEventListener("click", async () => {
         alert("Please enter comment");
         return;
       }
+      commentText = commentArea.value;
+      commentArea.value = "";
       const newComment = await commentBase.put({
         name: userName,
-        comment: commentArea.value,
+        comment: commentText,
       });
       commentContainer.innerHTML += `<p><b>${newComment.name}</b>: ${newComment.comment}</p>`;
-      commentArea.value = "";
     });
   }
 });
