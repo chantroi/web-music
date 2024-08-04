@@ -84,7 +84,7 @@ def get_album():
     return jsonify(result)
 
 
-@app.route("/list/add")
+@app.route("/list/create")
 def add_album():
     album = request.args.get("a")
     if album:

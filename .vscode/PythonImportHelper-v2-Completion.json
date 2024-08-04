@@ -151,7 +151,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def get_album():\n    album = request.args.get(\"a\")\n    if album:\n        db, drive = obj(album)\n        result = db.fetch().items\n        return jsonify(result)\n    db = Deta(os.environ[\"DETA_KEY\"]).Base(\"albums\")\n    result = db.fetch().items\n    return jsonify(result)\n@app.route(\"/list/add\")",
+        "peekOfCode": "def get_album():\n    album = request.args.get(\"a\")\n    if album:\n        db, drive = obj(album)\n        result = db.fetch().items\n        return jsonify(result)\n    db = Deta(os.environ[\"DETA_KEY\"]).Base(\"albums\")\n    result = db.fetch().items\n    return jsonify(result)\n@app.route(\"/list/create\")",
         "detail": "api.main",
         "documentation": {}
     },
