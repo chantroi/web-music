@@ -88,7 +88,7 @@
         "kind": 6,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "class DetaObj:\n    def __init__(self):\n        self.deta = Deta(os.environ[\"DETA_KEY\"])\n    def albums(self):\n        return self.deta.Base(\"albums\")\n    def album(self, album_name):\n        for i in self.albums().fetch().items:\n            if i[\"name\"] == album_name:\n                return self.deta.Base(f\"web-music-{i['key']}\")\n    def drive(self):",
+        "peekOfCode": "class DetaObj:\n    def __init__(self):\n        self.deta = Deta(os.environ[\"DETA_KEY\"])\n    def albums(self):\n        return self.deta.Base(\"albums\")\n    def album(self, album_name):\n        for i in self.albums().fetch().items:\n            if album_name == \"web-music\":\n                return self.deta.Base(\"web-music\")\n            if i[\"name\"] == album_name:",
         "detail": "api.main",
         "documentation": {}
     },
