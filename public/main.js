@@ -103,7 +103,11 @@ async function openAlbums() {
       albumElement.addEventListener("click", async (e) => {
         currentAlbum = e.target.getAttribute("name");
         const keyName = e.target.getAttribute("base");
-        base = deta.Base(`web-music-${keyName}`);
+        if (keyName === "web-music") {
+          base = deta.Base("web-music");
+        } else {
+          base = deta.Base(`web-music-${keyName}`);
+        }
         await loadBody();
       });
     }
