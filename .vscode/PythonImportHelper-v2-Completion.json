@@ -160,7 +160,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def add_album():\n    album = request.args.get(\"a\")\n    if album:\n        deta = DetaObj()\n        db = deta.album(album)\n        album = db.put({\"name\": album})\n        return jsonify(\n            status=\"success\", action=\"add\", key=album[\"key\"], name=album[\"name\"]\n        )\n    return jsonify(status=\"error\", action=\"add\")",
+        "peekOfCode": "def add_album():\n    album = request.args.get(\"a\")\n    if album:\n        deta = DetaObj()\n        db = deta.albums()\n        album = db.put(data={\"name\": album})\n        return jsonify(\n            status=\"success\", action=\"add\", key=album[\"key\"], name=album[\"name\"]\n        )\n    return jsonify(status=\"error\", action=\"add\")",
         "detail": "api.main",
         "documentation": {}
     },

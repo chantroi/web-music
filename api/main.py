@@ -98,8 +98,8 @@ def add_album():
     album = request.args.get("a")
     if album:
         deta = DetaObj()
-        db = deta.album(album)
-        album = db.put({"name": album})
+        db = deta.albums()
+        album = db.put(data={"name": album})
         return jsonify(
             status="success", action="add", key=album["key"], name=album["name"]
         )
