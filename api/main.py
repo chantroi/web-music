@@ -48,7 +48,9 @@ def save_music(info, album):
     db.put(content)
     req = requests.get(info["url"], timeout=100)
     data = req.content
-    drive.put(info["title"] + ".mp3", data)
+    filename = info["title"] + ".mp3"
+    if not drive.get(filename):
+        drive.put(filename, data)
 
 
 def ytsearch(kw: str):
