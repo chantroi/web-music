@@ -86,11 +86,16 @@ async function openAlbums() {
         const data = await albums.json();
         const albumElement = document.createElement("div");
         albumElement.id = "album-action";
-        albumElement.innerHTML = `<a name="${data.name}">${data.name}</a>`;
+        albumElement.innerHTML = `<a name="${data.name} base="${data.key}">${data.name}</a>`;
         albumContainer.appendChild(albumElement);
         albumElement.addEventListener("click", async (e) => {
           currentAlbum = e.target.getAttribute("name");
-          await reloadBase(currentAlbum);
+          const keyName = e.target.getAttribute("base");
+          if (keyName === "web-music") {
+            base = deta.Base("web-music");
+          } else {
+            base = deta.Base(`web-music-${keyName}`);
+          }
           await loadBody();
         });
       }
