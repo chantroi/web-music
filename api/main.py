@@ -89,7 +89,7 @@ def add_album():
     album = request.args.get("a")
     if album:
         db = Deta(os.environ["DETA_KEY"]).Base("albums")
-        db.put(key=f"web-music-{album}", name=album)
+        db.put({"name": album, "key": f"web-music-{album}"})
         return jsonify(status="success", action="add")
     return jsonify(status="error", action="add")
 

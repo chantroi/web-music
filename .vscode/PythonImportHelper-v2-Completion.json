@@ -160,7 +160,7 @@
         "kind": 2,
         "importPath": "api.main",
         "description": "api.main",
-        "peekOfCode": "def add_album():\n    album = request.args.get(\"a\")\n    if album:\n        db = Deta(os.environ[\"DETA_KEY\"]).Base(\"albums\")\n        db.put(key=f\"web-music-{album}\", name=album)\n        return jsonify(status=\"success\", action=\"add\")\n    return jsonify(status=\"error\", action=\"add\")\n@app.route(\"/delete\")\ndef delete_music():\n    album = request.args.get(\"a\")",
+        "peekOfCode": "def add_album():\n    album = request.args.get(\"a\")\n    if album:\n        db = Deta(os.environ[\"DETA_KEY\"]).Base(\"albums\")\n        db.put({\"name\": album, \"key\": f\"web-music-{album}\"})\n        return jsonify(status=\"success\", action=\"add\")\n    return jsonify(status=\"error\", action=\"add\")\n@app.route(\"/delete\")\ndef delete_music():\n    album = request.args.get(\"a\")",
         "detail": "api.main",
         "documentation": {}
     },
