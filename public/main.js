@@ -18,6 +18,7 @@ const commentBase = deta.Base("comments");
 const drive = deta.Drive("web-music");
 const commentDiv = document.getElementById("comment");
 const rotatingImage = document.getElementById("cover-rotating-image");
+const musicTitle = document.getElementById("music-title");
 
 async function getURL(name) {
   const data = await drive.get(name);
@@ -27,6 +28,7 @@ async function getURL(name) {
 }
 
 async function loadBody() {
+  await loadComments();
   const res = await fetch(`${API}/list`);
   const data = await res.json();
 
@@ -37,7 +39,6 @@ async function loadBody() {
 
   await Promise.all(promises);
   Player.list.show();
-  await loadComments();
 }
 
 async function loadComments() {
@@ -64,13 +65,17 @@ async function loadSong(e) {
 Player.on("play", function () {
   const currentSong = Player.list.audios[Player.list.index];
   const coverImage = currentSong.cover;
+  const songTitle = currentSong.name;
   rotatingImage.src = coverImage;
+  musicTitle.innerText = songTitle;
 });
 
 Player.on("listswitch", function (i) {
   const currentSong = Player.list.audios[Player.list.index];
   const coverImage = currentSong.cover;
+  const songTitle = currentSong.name;
   rotatingImage.src = coverImage;
+  musicTitle.innerText = songTitle;
 });
 document.addEventListener("DOMContentLoaded", loadBody);
 
@@ -88,15 +93,15 @@ document.querySelector("#comment-btn").addEventListener("click", async () => {
 
   commentArea.setAttribute("placeholder", "Vui lòng nhập bình luận");
 
-  closeBtn.innerText = "Đóng";
+  closeBtn.innerText = "X";
   closeBtn.className = "close-btn";
   submitBtn.innerText = "Gửi";
   submitBtn.className = "submit-btn";
-
+  popup.appendChild(closeBtn);
   popup.appendChild(nameInput);
   popup.appendChild(commentArea);
   popup.appendChild(submitBtn);
-  popup.appendChild(closeBtn);
+
   popup.style.position = "fixed";
   popup.style.top = "50%";
   popup.style.left = "50%";

@@ -8,40 +8,41 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+      rel="stylesheet"
+    />
     <title>Music Collection</title>
-    <script type="module" crossorigin src="/assets/index-D9EU0Vnk.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BrUI-VTQ.css">
+    <script type="module" crossorigin src="/assets/index-UilediTK.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-Dg0rklRf.css">
   </head>
-  <body>
-    <nav class="nav-extended">
-      <h1 class="nav-title">Music Collection</h1>
-
-      <div class="nav-wrapper">
-        <button id="search-btn">
-          <i class="material-icons">add</i>
-          Thêm Âm Nhạc
-        </button>
-
-        <button id="comment-btn">
-          <i class="material-icons">comment</i>Đánh Giá
-        </button>
+  <body
+    style="
+      background-image: url('https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-preview.jpg');
+    "
+  >
+    <div id="app">
+      <div id="search">
+        <a id="search-btn"><i class="material-icons">add</i>Thêm nhạc</a>
       </div>
-    </nav>
-    <div class="image-container">
-      <img
-        id="cover-rotating-image"
-        src="cover.jpg"
-        alt="Cover"
-        class="rotating-image"
-      />
+      <b class="card-title" id="music-title">Music Collection</b>
+      <a id="comment-btn"><i class="material-icons">comment</i></a>
+      <div class="image-container">
+        <img
+          id="cover-rotating-image"
+          src="cover.jpg"
+          alt="Cover"
+          class="responsive-img rotating-image"
+        />
+      </div>
+
+      <div class="container">
+        <div id="comment"></div>
+      </div>
     </div>
+
     <div id="player"></div>
-    <b><i class="material-icons">chat</i>Bình luận:</b>
-    <div class="row">
-      <div class="card" id="comment">
-        <div></div>
-      </div>
-    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
 </html>

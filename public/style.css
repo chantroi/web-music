@@ -1,29 +1,38 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: white;
-  color: black;
-  margin: 0;
-  padding: 0;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+  position: fixed;
+  border: #f40707;
+  background-color: hsl(222, 16%, 66%);
+  border-radius: 10px;
+  padding: 10px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  width: 90%;
+  height: 90%;
+  overflow-y: scroll;
 }
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: black;
-    color: white;
-  }
-  div {
-    background-color: darkslategrey;
-  }
-  span {
-    color: orange;
-  }
-  li {
-    background-color: black;
-  }
+#search-btn {
+  width: 100%;
+  color: white;
+  border: #f40707;
+}
+#comment-btn {
+  background-color: #100101;
+  color: white;
+  border: none;
+  margin-bottom: 0%;
 }
 .image-container {
-  width: 50px;
-  height: 50px;
-  overflow: hidden; 
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,52 +52,7 @@ body {
     transform: rotate(360deg);
   }
 }
-.nav-title {
-  color: white;
-  font-size: 24px;
-  position: static;
-}
-.nav-extended {
-  background-color: #2c3e50;
-  padding: 10px;
-  position: relative;
-}
-.nav-wrapper {
-  display: flex;
-  align-items: center;
-}
 
-#search-btn {
-  background-color: #100101;
-  color: white;
-  border: none;
-}
-#search-btn:hover {
-  background-color: #2ecc71;
-}
-.row {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-.card {
-  background-color: white;
-  border-color: #f40707;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 100%;
-  max-width: 600px;
-  
-}
-.comment {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 100%;
-  max-width: 600px;
-}
 #comment-btn {
   background-color: #100101;
   color: white;
@@ -96,14 +60,15 @@ body {
   margin-left: 50%;
 }
 
-.close-btn {
-  background-color: #f40707;
-  color: white;
-  border: none;
-  margin-left: 50%;
-}
 .submit-btn {
   background-color: #000000;
   color: white;
   border: none;
+}
+.close-btn {
+  background-color: #f40707;
+  color: white;
+  top: 0px;
+  right: 0px;
+  position: absolute;
 }
