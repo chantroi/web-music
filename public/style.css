@@ -53,25 +53,57 @@
   }
 }
 
-#comment-btn {
+.func-btn {
   background-color: #100101;
   color: white;
   border: none;
-  margin-left: 50%;
 }
-
-.submit-btn {
-  background-color: #000000;
+#popup {
+  position: absolute;
+  background-color: rgb(255, 255, 255);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  height: 80%;
+  top: 10%;
+  left: 5%;
+  z-index: 1000;
+}
+#comment-area {
+  width: 80%;
+}
+#submit-btn {
+  background-color: #3e3939;
   color: white;
-  border: none;
+  width: 20%;
 }
-.close-btn {
+#close-btn {
   background-color: #f40707;
   color: white;
   top: 0px;
   right: 0px;
   position: absolute;
+  z-index: 1001;
 }
 #wave {
-  height: 200px;
+  height: 80%;
+}
+.comment-form {
+  display: flex;
+  bottom: 0;
+  width: 90%;
+  position: absolute;
+  background-color: white;
+}
+
+#comment-container {
+  width: 100%;
+  height: calc(100% - 60px);
+  display: block;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  bottom: 20px;
+  box-sizing: border-box; 
 }

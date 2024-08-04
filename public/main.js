@@ -20,9 +20,8 @@ const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
 const base = deta.Base("web-music");
 const commentBase = deta.Base("comments");
 const drive = deta.Drive("web-music");
-const commentDiv = document.getElementById("comment");
-const rotatingImage = document.getElementById("cover-rotating-image");
 const musicTitle = document.getElementById("music-title");
+let userName;
 
 async function getURL(name) {
   const data = await drive.get(name);
@@ -32,7 +31,6 @@ async function getURL(name) {
 }
 
 async function loadBody() {
-  await loadComments();
   const res = await fetch(`${API}/list`);
   const data = await res.json();
 
@@ -43,16 +41,6 @@ async function loadBody() {
 
   await Promise.all(promises);
   Player.list.show();
-}
-
-async function loadComments() {
-  const res = await fetch(`${API}/comments`);
-  const data = await res.json();
-  for (const comment of data) {
-    const thisComment = document.createElement("div");
-    thisComment.innerHTML = `<b>${comment.name}</b>: ${comment.comment}`;
-    commentDiv.appendChild(thisComment);
-  }
 }
 
 async function loadSong(e) {
@@ -82,51 +70,53 @@ document.addEventListener("DOMContentLoaded", loadBody);
 document.getElementById("search-btn").addEventListener("click", loadSong);
 
 document.querySelector("#comment-btn").addEventListener("click", async () => {
-  const popup = document.createElement("div");
-  const nameInput = document.createElement("input");
-  const commentArea = document.createElement("textarea");
-  const closeBtn = document.createElement("button");
-  const submitBtn = document.createElement("button");
+  const popup = document.getElementById("popup");
+  if (!popup.open) {
+    popup.show();
+    popup.innerHTML = `<button id="close-btn">X</button>
+    <div id="comment-container"></div>
+    <div class="comment-form">
+    <textarea id="comment-area" placeholder="Nội dung bình luận"></textarea>
+    <button id="submit-btn">Gửi</button></div>`;
+    const closeBtn = popup.querySelector("#close-btn");
+    const commentArea = popup.querySelector("#comment-area");
+    const submitBtn = popup.querySelector("#submit-btn");
+    const commentContainer = popup.querySelector("#comment-container");
 
-  nameInput.setAttribute("type", "text");
-  nameInput.setAttribute("placeholder", "Nhập tên của bạn");
+    const comments = await fetch(`${API}/comments`);
+    const data = await comments.json();
+    for (const comment of data) {
+      const commentElement = document.createElement("div");
+      commentElement.innerHTML = `<p><b>${comment.name}</b>: ${comment.comment}</p>`;
+      commentContainer.appendChild(commentElement);
+    }
 
-  commentArea.setAttribute("placeholder", "Vui lòng nhập bình luận");
-
-  closeBtn.innerText = "X";
-  closeBtn.className = "close-btn";
-  submitBtn.innerText = "Gửi";
-  submitBtn.className = "submit-btn";
-  popup.appendChild(closeBtn);
-  popup.appendChild(nameInput);
-  popup.appendChild(commentArea);
-  popup.appendChild(submitBtn);
-
-  popup.style.position = "fixed";
-  popup.style.top = "50%";
-  popup.style.left = "50%";
-  popup.style.transform = "translate(-50%, -50%)";
-  popup.style.padding = "20px";
-  popup.style.backgroundColor = "white";
-  popup.style.border = "1px solid black";
-  popup.style.zIndex = "1000";
-
-  document.body.appendChild(popup);
-
-  closeBtn.addEventListener("click", () => {
-    document.body.removeChild(popup);
-  });
-
-  submitBtn.addEventListener("click", async () => {
-    const thisComment = document.createElement("div");
-    thisComment.innerHTML = `<b>${nameInput.value}</b>: ${commentArea.value}`;
-    commentDiv.appendChild(thisComment);
-    document.body.removeChild(popup);
-
-    const newComment = await commentBase.put({
-      name: nameInput.value,
-      comment: commentArea.value,
+    commentArea.addEventListener("focus", async () => {
+      if (!userName) {
+        userName = prompt("Nhập tên: ");
+        if (!userName) {
+          commentArea.blur();
+          commentArea.value = "";
+        }
+      }
     });
-    console.log(newComment);
-  });
+
+    closeBtn.addEventListener("click", () => {
+      popup.innerHTML = "";
+      popup.close();
+    });
+
+    submitBtn.addEventListener("click", async () => {
+      if (!commentArea.value) {
+        alert("Please enter comment");
+        return;
+      }
+      const newComment = await commentBase.put({
+        name: userName,
+        comment: commentArea.value,
+      });
+      commentContainer.innerHTML += `<p><b>${newComment.name}</b>: ${newComment.comment}</p>`;
+      commentArea.value = "";
+    });
+  }
 });
