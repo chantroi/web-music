@@ -1,6 +1,7 @@
 import "./style.css";
 import "aplayer/dist/APlayer.min.css";
 import APlayer from "aplayer";
+import AudioMotionAnalyzer from "audiomotion-analyzer";
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
 
 const API = "https://webmusicapi.mywire.org";
@@ -11,6 +12,9 @@ const Player = new APlayer({
   fixed: true,
   lrcType: 3,
   audio: [],
+});
+const audioMotion = new AudioMotionAnalyzer(document.getElementById("wave"), {
+  source: Player.audio,
 });
 const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
 const base = deta.Base("web-music");
@@ -64,17 +68,13 @@ async function loadSong(e) {
 
 Player.on("play", function () {
   const currentSong = Player.list.audios[Player.list.index];
-  const coverImage = currentSong.cover;
   const songTitle = currentSong.name;
-  rotatingImage.src = coverImage;
   musicTitle.innerText = songTitle;
 });
 
 Player.on("listswitch", function (i) {
   const currentSong = Player.list.audios[Player.list.index];
-  const coverImage = currentSong.cover;
   const songTitle = currentSong.name;
-  rotatingImage.src = coverImage;
   musicTitle.innerText = songTitle;
 });
 document.addEventListener("DOMContentLoaded", loadBody);
