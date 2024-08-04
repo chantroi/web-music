@@ -68,7 +68,7 @@ async function loadBody() {
 async function loadSong(e) {
   const content = prompt("Nhập link bản nhạc:");
   if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
-    const res = await fetch(`${API}/get?url=${content}`);
+    const res = await fetch(`${API}/get?url=${content}&a=${currentAlbum}`);
     const data = await res.json();
     const song = await base.get(data.key);
     song.url = await getURL(data.key);
@@ -97,6 +97,7 @@ async function openAlbums() {
         albumContainer.appendChild(albumElement);
         albumElement.addEventListener("click", async (e) => {
           currentAlbum = e.target.getAttribute("name");
+          await reloadBase(currentAlbum);
           await loadBody();
         });
       }
