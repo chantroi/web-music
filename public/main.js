@@ -4,6 +4,7 @@ import APlayer from "aplayer";
 import AudioMotionAnalyzer from "audiomotion-analyzer";
 import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
 
+let currentAlbum = "common";
 const API = "https://webmusicapi.mywire.org";
 const Player = new APlayer({
   container: document.getElementById("player"),
@@ -13,15 +14,36 @@ const Player = new APlayer({
   lrcType: 3,
   audio: [],
 });
+Player.on("play", function () {
+  const currentSong = Player.list.audios[Player.list.index];
+  const songTitle = currentSong.name;
+  musicTitle.innerText = songTitle;
+});
+
+Player.on("listswitch", function (i) {
+  const currentSong = Player.list.audios[Player.list.index];
+  const songTitle = currentSong.name;
+  musicTitle.innerText = songTitle;
+});
+
 const audioMotion = new AudioMotionAnalyzer(document.getElementById("wave"), {
   source: Player.audio,
 });
+
 const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
-const base = deta.Base("web-music");
+let base = deta.Base("web-music");
 const commentBase = deta.Base("comments");
 const drive = deta.Drive("web-music");
 const musicTitle = document.getElementById("music-title");
 let userName;
+
+async function reloadBase() {
+  if (currentAlbum === "common") {
+    base = deta.Base("web-music");
+  } else {
+    base = deta.Base(`web-music-${currentAlbum}`);
+  }
+}
 
 async function getURL(name) {
   const data = await drive.get(name);
@@ -31,7 +53,7 @@ async function getURL(name) {
 }
 
 async function loadBody() {
-  const res = await fetch(`${API}/list`);
+  const res = await fetch(`${API}/list?a=${currentAlbum}`);
   const data = await res.json();
 
   const promises = data.map(async (song) => {
@@ -54,20 +76,46 @@ async function loadSong(e) {
   }
 }
 
-Player.on("play", function () {
-  const currentSong = Player.list.audios[Player.list.index];
-  const songTitle = currentSong.name;
-  musicTitle.innerText = songTitle;
-});
-
-Player.on("listswitch", function (i) {
-  const currentSong = Player.list.audios[Player.list.index];
-  const songTitle = currentSong.name;
-  musicTitle.innerText = songTitle;
-});
-document.addEventListener("DOMContentLoaded", loadBody);
-
-document.getElementById("search-btn").addEventListener("click", loadSong);
+async function openAlbums() {
+  const res = await fetch(`${API}/list`);
+  const data = await res.json();
+  const popup = document.getElementById("popup");
+  if (!popup.open) {
+    popup.show();
+    popup.innerHTML = `<button id="close-btn">X</button><button id="create-album" href="#">Tạo Album</button><ul id="album-container"></ul>`;
+    const closeBtn = popup.querySelector("#close-btn");
+    const albumContainer = popup.querySelector("#album-container");
+    const createAlbum = popup.querySelector("#create-album");
+    createAlbum.addEventListener("click", async () => {
+      const name = prompt("Tên Album:");
+      if (name) {
+        const albums = await fetch(`${API}/list/create?a=${name}`);
+        const data = await albums.json();
+        const albumElement = document.createElement("div");
+        albumElement.id = "album-action";
+        albumElement.innerHTML = `<a name="${data.name}">${data.name}</a>`;
+        albumContainer.appendChild(albumElement);
+        albumElement.addEventListener("click", async (e) => {
+          currentAlbum = e.target.getAttribute("name");
+          await loadBody();
+        });
+      }
+    });
+    for (const album of data) {
+      const albumElement = document.createElement("li");
+      albumElement.id = "album-action";
+      albumElement.innerHTML = `<a name="${album.name}">${album.name}</a>`;
+      albumContainer.appendChild(albumElement);
+      albumElement.addEventListener("click", async (e) => {
+        currentAlbum = e.target.getAttribute("name");
+        await loadBody();
+      });
+    }
+    closeBtn.addEventListener("click", () => {
+      popup.close();
+    });
+  }
+}
 
 document.querySelector("#comment-btn").addEventListener("click", async () => {
   const popup = document.getElementById("popup");
@@ -121,3 +169,7 @@ document.querySelector("#comment-btn").addEventListener("click", async () => {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", loadBody);
+document.getElementById("search-btn").addEventListener("click", loadSong);
+document.getElementById("collections").addEventListener("click", openAlbums);
