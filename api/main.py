@@ -16,9 +16,9 @@ class DetaObj:
         return self.deta.Base("albums")
 
     def album(self, album_name):
+        if album_name == "web-music":
+            return self.deta.Base("web-music")
         for i in self.albums().fetch().items:
-            if album_name == "web-music":
-                return self.deta.Base("web-music")
             if i["name"] == album_name:
                 return self.deta.Base(f"web-music-{i['key']}")
 
