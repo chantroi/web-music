@@ -29,7 +29,7 @@ export async function getMusicList(baseName) {
 }
 
 export async function putComment(name, comment) {
-  const deta = getDeta();
+  const deta = getDeta()[0];
   const base = deta.Base("comments");
   const commentData = await base.put({
     name,
