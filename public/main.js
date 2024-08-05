@@ -160,12 +160,20 @@ async function openSearchBar() {
   const popup = document.getElementById("popup");
   if (!popup.open) {
     popup.show();
-    popup.innerHTML = `<button id="close-btn">X</button><div id="search-container">
-          <input id="search-input" placeholder="Nhập từ khoá tìm kiếm"><button id="search-btn"><i class="material-icons">search</i>Tìm kiếm</button></div><div id="search-result"></div>`;
+    popup.innerHTML = `
+      <button id="close-btn">X</button>
+      <div id="search-container">
+        <input id="search-input" placeholder="Nhập từ khoá tìm kiếm">
+        <button id="search-btn"><i class="material-icons">search</i>Tìm kiếm</button>
+      </div>
+      <div id="search-result"></div>
+    `;
+
     const closeBtn = popup.querySelector("#close-btn");
     const searchBtn = popup.querySelector("#search-btn");
     const searchResult = popup.querySelector("#search-result");
     const searchInput = popup.querySelector("#search-input");
+
     closeBtn.addEventListener("click", () => {
       popup.innerHTML = "";
       popup.close();
@@ -181,18 +189,30 @@ async function openSearchBar() {
         body: JSON.stringify({ kw: searchInput.value }),
       });
       const data = await req.json();
+
       for (const item of data.videos) {
         const link = `https://www.youtube.com${item.url_suffix}`;
-        const itemElement = `<li class="search-item"><img class="item-thumbnail" src="${item.thumbnails[0]}" />${item.title}<button id="add-item"><i class="material-icons">add</i></button></li>`;
+        const itemElement = `
+          <li class="search-item" data-link="${link}">
+            <img class="item-thumbnail" src="${item.thumbnails[0]}" />
+            ${item.title}
+            <button class="add-item"><i class="material-icons">add</i></button>
+          </li>
+        `;
         searchResult.insertAdjacentHTML("beforeend", itemElement);
-        const addBtn = searchResult.querySelector("#add-item");
-        addBtn.addEventListener("click", async (e) => {
+      }
+
+      // Add a single event listener for all "add" buttons
+      searchResult.addEventListener("click", async (e) => {
+        if (e.target.closest(".add-item")) {
+          const listItem = e.target.closest(".search-item");
+          const link = listItem.dataset.link;
           const res = await fetch(`${API}/get?url=${link}&a=${currentAlbum}`);
           const data = await res.json();
           const song = await getMusicData(data.key, currentBase);
           ap.list.add(song);
-        });
-      }
+        }
+      });
     });
   }
 }
