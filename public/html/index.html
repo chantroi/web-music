@@ -2,50 +2,44 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Collection</title>
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-      rel="stylesheet"
-    />
-    <title>Music Collection</title>
-    <script type="module" crossorigin src="/assets/index-DKbwRuau.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BwpzZIQD.css">
+    <script type="module" crossorigin src="/assets/index-BXcgutpY.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CXpNI3fl.css">
   </head>
-  <body
-    style="
-      background-image: url('https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-preview.jpg');
-    "
-  >
-    <dialog id="popup"></dialog>
+  <body>
     <div id="app">
-      <b class="card-title" id="music-title">Music Collection</b>
-      <div id="wave"></div>
-      <div id="search" class="btn-container">
-        <button id="collections" class="func-btn">
-          <i class="material-icons">list</i>Bộ sưu tập
+      <h1>Music Collection</h1>
+
+      <div id="notification-container"></div>
+
+      <div id="audio-visualizer"></div>
+
+      <div id="control-buttons" class="button-container">
+        <button id="open-albums-btn" class="control-btn">
+          <i class="material-icons">list</i>Bộ sưu tập
         </button>
-        <button id="search-btn" class="func-btn">
+        <button id="add-music-btn" class="control-btn">
           <i class="material-icons">add</i>Thêm nhạc
         </button>
-
-        <button id="comment-btn" class="func-btn">
+        <button id="open-comments-btn" class="control-btn">
           <i class="material-icons">comment</i>Bình luận
         </button>
-      </div>
-      <div id="search">
-        <button id="open-search" class="func-btn">
-          <i class="material-icons">search</i>Tìm kiếm
+        <button id="open-search-btn" class="control-btn">
+          <i class="material-icons">search</i>Tìm Kiếm
         </button>
       </div>
+
+      <div id="music-title"></div>
+
+      <div id="audio-player-container"></div>
     </div>
 
-    <div id="player"></div>
+    <dialog id="popup-dialog"></dialog>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
 </html>
