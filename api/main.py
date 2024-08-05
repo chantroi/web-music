@@ -1,33 +1,36 @@
 import os
 import json
+
+import deta
 import yt_dlp
 import requests
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from youtube_search import YoutubeSearch
-from deta import Deta
+
+app = Flask(__name__)
+CORS(app)
 
 
-class DetaObj:
+class Deta:
     def __init__(self):
-        self.deta = Deta(os.environ["DETA_KEY"])
+        self.deta = deta.Deta(os.environ["DETA_KEY"])
 
-    def albums(self):
+    def comments(self):
+        return self.deta.Base("comments")
+
+    def bases(self):
         return self.deta.Base("albums")
 
-    def album(self, album_name):
+    def base(self, album_name):
         if album_name == "Common":
             return self.deta.Base("web-music")
-        for i in self.albums().fetch().items:
+        for i in self.bases().fetch().items:
             if i["name"] == album_name:
                 return self.deta.Base(f"web-music-{i['key']}")
 
     def drive(self):
         return self.deta.Drive("web-music")
-
-
-app = Flask(__name__)
-CORS(app)
 
 
 def music(video_url):
@@ -38,9 +41,9 @@ def music(video_url):
 
 
 def save_music(info, album):
-    deta = DetaObj()
-    db = deta.album(album)
-    drive = deta.drive()
+    d = Deta()
+    db = d.base(album)
+    drive = d.drive()
     content = {
         "key": info["title"] + ".mp3",
         "name": info["title"],
@@ -55,11 +58,6 @@ def save_music(info, album):
         drive.put(filename, data)
 
 
-def ytsearch(kw: str):
-    results = YoutubeSearch(kw, max_results=10).to_json()
-    return json.loads(results)
-
-
 @app.route("/")
 def home():
     return jsonify(page="home")
@@ -67,12 +65,16 @@ def home():
 
 @app.route("/search", methods=["GET", "POST"])
 def yt_search():
+    def search(kw: str):
+        results = YoutubeSearch(kw, max_results=10).to_json()
+        return json.loads(results)
+
     if request.method == "POST":
         keyword = request.json.get("kw")
     else:
         keyword = request.args.get("kw")
     if keyword:
-        return jsonify(ytsearch(keyword))
+        return jsonify(search(keyword))
     return jsonify(
         status="error", message="no keyword to search", resolved=False, status_code=404
     )
@@ -87,25 +89,20 @@ def get_music():
     return jsonify(key=info["title"] + ".mp3")
 
 
-@app.route("/list")
-def get_album():
-    deta = DetaObj()
-    album = request.args.get("a")
-    if album:
-        db = deta.album(album)
-        result = db.fetch().items
-        return jsonify(result)
-    db = deta.albums()
+@app.route("/album/list")
+def get_albums():
+    d = Deta()
+    db = d.bases()
     result = db.fetch().items
     return jsonify(result)
 
 
-@app.route("/list/create")
+@app.route("/album/create")
 def add_album():
     album = request.args.get("a")
     if album:
-        deta = DetaObj()
-        db = deta.albums()
+        d = Deta()
+        db = d.bases()
         album = db.put(data={"name": album})
         return jsonify(
             status="success", action="add", key=album["key"], name=album["name"]
@@ -113,19 +110,31 @@ def add_album():
     return jsonify(status="error", action="add")
 
 
-@app.route("/delete")
-def delete_music():
+@app.route("/album/delete")
+def delete_album():
     album = request.args.get("a")
-    deta = DetaObj()
-    db = deta.album(album)
-    key = request.args.get("key")
-    db.delete(key)
-    return jsonify(key=key, status="success", action="delete")
+    if album:
+        d = Deta()
+        db = d.bases()
+        db.delete(album)
+        return jsonify(status="success", action="delete")
+    return jsonify(status="error", action="delete")
 
 
-@app.route("/comments")
+@app.route("/audio/delete")
+def delete_audio():
+    audio = request.args.get("audio")
+    if audio:
+        d = Deta()
+        drive = d.drive()
+        drive.delete(audio)
+        return jsonify(status="success", action="delete")
+    return jsonify(status="error", action="delete")
+
+
+@app.route("/comment/all")
 def get_comments():
-    deta = Deta(os.environ["DETA_KEY"])
-    db = deta.Base("comments")
+    d = Deta()
+    db = d.comments()
     result = db.fetch().items
     return jsonify(result)
