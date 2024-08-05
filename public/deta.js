@@ -6,21 +6,13 @@ function getDeta() {
   return [deta, drive];
 }
 
-async function albumBase(albumName) {
-  const albums = await getAlbumList();
-  for (const album of albums) {
-    if (albumName === "Common") {
-      return getDeta()[0].Base("web-music");
-    }
-    if (album.name === albumName) {
-      return getDeta()[0].Base(`web-music-${album.key}`);
-    }
-  }
+async function albumBase(baseName) {
+  return getDeta()[0].Base(baseName);
 }
 
-export async function getMusicData(key, albumName) {
+export async function getMusicData(key, baseName) {
   const drive = getDeta()[1];
-  const base = await albumBase(albumName);
+  const base = await albumBase(baseName);
   const data = await drive.get(key);
   const blob = new Blob([data], { type: "audio/mpeg" });
   const url = URL.createObjectURL(blob);
@@ -29,17 +21,10 @@ export async function getMusicData(key, albumName) {
   return music;
 }
 
-export async function getMusicList(albumName) {
-  const base = await albumBase(albumName);
-  const drive = getDeta()[1];
+export async function getMusicList(baseName) {
+  const base = await albumBase(baseName);
   const result = await base.fetch();
   const musicList = result.items;
-  for (const music of musicList) {
-    const data = await drive.get(music.key);
-    const blob = new Blob([data], { type: "audio/mpeg" });
-    const url = URL.createObjectURL(blob);
-    music.url = url;
-  }
   return musicList;
 }
 
@@ -67,4 +52,16 @@ export async function getAlbumList() {
   const result = await base.fetch();
   const albums = result.items;
   return albums;
+}
+export async function getBaseName(albumName) {
+  if (albumName === "Common") {
+    return "web-music";
+  } else {
+    const albums = await getAlbumList();
+    for (const album of albums) {
+      if (album.name === albumName) {
+        return `web-music-${album.key}`;
+      }
+    }
+  }
 }

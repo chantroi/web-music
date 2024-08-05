@@ -8,9 +8,11 @@ import {
   putComment,
   getComments,
   getAlbumList,
+  getBaseName,
 } from "./deta";
 
 let userName;
+let currentBase = "web-music";
 let currentAlbum = "Common";
 const musicTitle = document.getElementById("music-title");
 const API = "https://webmusicapi.mywire.org";
@@ -41,9 +43,13 @@ async function updateTitle() {
 }
 
 async function reloadList() {
-  const data = await getMusicList(currentAlbum);
+  if (!currentBase) {
+    currentBase = await getBaseName(albumName);
+  }
+  const data = await getMusicList(currentBase);
   const promises = data.map(async (song) => {
-    ap.list.add(song);
+    const songData = await getMusicData(song.key, currentBase);
+    ap.list.add(songData);
   });
   await Promise.all(promises);
   ap.list.show();
@@ -54,7 +60,7 @@ async function getMusic(e) {
   if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
     const res = await fetch(`${API}/get?url=${content}&a=${currentAlbum}`);
     const data = await res.json();
-    const song = await getMusicData(data.key, currentAlbum);
+    const song = await getMusicData(data.key, currentBase);
     ap.list.add(song);
   }
 }
@@ -79,6 +85,7 @@ async function openAlbums() {
         albumContainer.appendChild(albumElement);
         albumElement.addEventListener("click", async (e) => {
           currentAlbum = e.target.getAttribute("name");
+          currentBase = "web-music-" + e.target.getAttribute("base");
           await reloadList();
         });
       }
@@ -90,6 +97,7 @@ async function openAlbums() {
       albumContainer.appendChild(albumElement);
       albumElement.addEventListener("click", async (e) => {
         currentAlbum = e.target.getAttribute("name");
+        currentBase = "web-music-" + e.target.getAttribute("base");
         await reloadList();
       });
     }
