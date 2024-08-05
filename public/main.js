@@ -1,12 +1,20 @@
-import "./style.css";
 import "aplayer/dist/APlayer.min.css";
 import APlayer from "aplayer";
 import AudioMotionAnalyzer from "audiomotion-analyzer";
-import { Deta } from "https://cdn.deta.space/js/deta@latest/deta.mjs";
+import "./style.css";
+import {
+  getMusicData,
+  getMusicList,
+  putComment,
+  getComments,
+  getAlbumList,
+} from "./deta";
 
+let userName;
 let currentAlbum = "Common";
+const musicTitle = document.getElementById("music-title");
 const API = "https://webmusicapi.mywire.org";
-const Player = new APlayer({
+const ap = new APlayer({
   container: document.getElementById("player"),
   autoplay: true,
   theme: "#FADFA3",
@@ -14,64 +22,45 @@ const Player = new APlayer({
   lrcType: 3,
   audio: [],
 });
-Player.on("play", function () {
-  const currentSong = Player.list.audios[Player.list.index];
-  const songTitle = currentSong.name;
-  musicTitle.innerText = songTitle;
-});
 
-Player.on("listswitch", function (i) {
-  const currentSong = Player.list.audios[Player.list.index];
-  const songTitle = currentSong.name;
-  musicTitle.innerText = songTitle;
-});
-
-const audioMotion = new AudioMotionAnalyzer(document.getElementById("wave"), {
-  source: Player.audio,
-});
-
-const deta = Deta("c0kEEGmHJte_YjH9AKDzdmP4tm6Zyge3Fme9KyMRNwXB");
-const commentBase = deta.Base("comments");
-const drive = deta.Drive("web-music");
-let base = deta.Base("web-music");
-
-const musicTitle = document.getElementById("music-title");
-let userName;
-
-async function getURL(name) {
-  const data = await drive.get(name);
-  const blob = new Blob([data], { type: "audio/mpeg" });
-  const url = URL.createObjectURL(blob);
-  return url;
+async function initBody() {
+  await initContent();
+  await reloadList();
 }
 
-async function loadBody() {
-  const res = await fetch(`${API}/list?a=${currentAlbum}`);
-  const data = await res.json();
-
-  const promises = data.map(async (song) => {
-    song.url = await getURL(song.key);
-    Player.list.add(song);
+async function initContent() {
+  new AudioMotionAnalyzer(document.getElementById("wave"), {
+    source: ap.audio,
   });
-
-  await Promise.all(promises);
-  Player.list.show();
 }
 
-async function loadSong(e) {
+async function updateTitle() {
+  const currentSong = ap.list.audios[ap.list.index];
+  const songTitle = currentSong.name;
+  musicTitle.innerText = songTitle;
+}
+
+async function reloadList() {
+  const data = await getMusicList(currentAlbum);
+  const promises = data.map(async (song) => {
+    ap.list.add(song);
+  });
+  await Promise.all(promises);
+  ap.list.show();
+}
+
+async function getMusic(e) {
   const content = prompt("Nhập link bản nhạc:");
   if ("https://" === content.slice(0, 8) || "http://" === content.slice(0, 7)) {
     const res = await fetch(`${API}/get?url=${content}&a=${currentAlbum}`);
     const data = await res.json();
-    const song = await base.get(data.key);
-    song.url = await getURL(data.key);
-    Player.list.add(song);
+    const song = await getMusicData(data.key, currentAlbum);
+    ap.list.add(song);
   }
 }
 
 async function openAlbums() {
-  const res = await fetch(`${API}/list`);
-  const data = await res.json();
+  const data = await getAlbumList();
   const popup = document.getElementById("popup");
   if (!popup.open) {
     popup.show();
@@ -90,13 +79,7 @@ async function openAlbums() {
         albumContainer.appendChild(albumElement);
         albumElement.addEventListener("click", async (e) => {
           currentAlbum = e.target.getAttribute("name");
-          const keyName = e.target.getAttribute("base");
-          if (keyName === "web-music") {
-            base = deta.Base("web-music");
-          } else {
-            base = deta.Base(`web-music-${keyName}`);
-          }
-          await loadBody();
+          await reloadList();
         });
       }
     });
@@ -107,13 +90,7 @@ async function openAlbums() {
       albumContainer.appendChild(albumElement);
       albumElement.addEventListener("click", async (e) => {
         currentAlbum = e.target.getAttribute("name");
-        const keyName = e.target.getAttribute("base");
-        if (keyName === "web-music") {
-          base = deta.Base("web-music");
-        } else {
-          base = deta.Base(`web-music-${keyName}`);
-        }
-        await loadBody();
+        await reloadList();
       });
     }
     closeBtn.addEventListener("click", () => {
@@ -122,22 +99,21 @@ async function openAlbums() {
   }
 }
 
-document.querySelector("#comment-btn").addEventListener("click", async () => {
+async function handleComment() {
   const popup = document.getElementById("popup");
   if (!popup.open) {
     popup.show();
     popup.innerHTML = `<button id="close-btn">X</button>
-    <div id="comment-container"></div>
-    <div class="comment-form">
-    <textarea id="comment-area" placeholder="Nội dung bình luận"></textarea>
-    <button id="submit-btn">Gửi</button></div>`;
+          <div id="comment-container"></div>
+          <div class="comment-form">
+          <textarea id="comment-area" placeholder="Nội dung bình luận"></textarea>
+          <button id="submit-btn">Gửi</button></div>`;
     const closeBtn = popup.querySelector("#close-btn");
     const commentArea = popup.querySelector("#comment-area");
     const submitBtn = popup.querySelector("#submit-btn");
     const commentContainer = popup.querySelector("#comment-container");
 
-    const comments = await fetch(`${API}/comments`);
-    const data = await comments.json();
+    const data = await getComments();
     for (const comment of data) {
       const commentElement = document.createElement("div");
       commentElement.innerHTML = `<p><b>${comment.name}</b>: ${comment.comment}</p>`;
@@ -166,15 +142,15 @@ document.querySelector("#comment-btn").addEventListener("click", async () => {
       }
       commentText = commentArea.value;
       commentArea.value = "";
-      const newComment = await commentBase.put({
-        name: userName,
-        comment: commentText,
-      });
+      const newComment = await putComment(userName, commentText);
       commentContainer.innerHTML += `<p><b>${newComment.name}</b>: ${newComment.comment}</p>`;
     });
   }
-});
+}
 
-document.addEventListener("DOMContentLoaded", loadBody);
-document.getElementById("search-btn").addEventListener("click", loadSong);
+document.addEventListener("DOMContentLoaded", initBody);
+document.getElementById("search-btn").addEventListener("click", getMusic);
 document.getElementById("collections").addEventListener("click", openAlbums);
+document.querySelector("#comment-btn").addEventListener("click", handleComment);
+ap.on("play", updateTitle);
+ap.on("listswitch", updateTitle);
