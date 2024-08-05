@@ -65,9 +65,12 @@ def home():
     return jsonify(page="home")
 
 
-@app.route("/search")
+@app.route("/search", methods=["GET", "POST"])
 def yt_search():
-    keyword = request.args.get("kw")
+    if request.method == "POST":
+        keyword = request.json.get("kw")
+    else:
+        keyword = request.args.get("kw")
     if keyword:
         return jsonify(ytsearch(keyword))
     return jsonify(

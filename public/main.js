@@ -156,9 +156,50 @@ async function handleComment() {
   }
 }
 
+async function openSearchBar() {
+  const popup = document.getElementById("popup");
+  if (!popup.open) {
+    popup.show();
+    popup.innerHTML = `<button id="close-btn">X</button><div id="search-container">
+          <input id="search-input" placeholder="Nhập từ khoá tìm kiếm"><button id="search-btn"><i class="material-icons">search</i>Tìm kiếm</button></div><div id="search-result"></div>`;
+    const closeBtn = popup.querySelector("#close-btn");
+    const searchBtn = popup.querySelector("#search-btn");
+    const searchResult = popup.querySelector("#search-result");
+    closeBtn.addEventListener("click", () => {
+      popup.innerHTML = "";
+      popup.close();
+    });
+
+    searchBtn.addEventListener("click", async (e) => {
+      const req = await fetch(`${API}/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ kw: searchInput.value }),
+      });
+      const data = await req.json();
+      for (const item of data.videos) {
+        const link = `https://www.youtube.com${item.url_suffix}`;
+        const itemElement = `<li class="search-item"><img class="item-thumbnail" src="${item.thumbnails[0]}" />${item.title}<button id="add-item" link="${link}"><i class="material-icons">add</i></button></li>`;
+        searchResult.insertAdjacentHTML("beforeend", itemElement);
+        const addBtn = searchResult.querySelector("#add-item");
+        addBtn.addEventListener("click", async (e) => {
+          const link = e.target.getAttribute("link");
+          const res = await fetch(`${API}/get?url=${link}&a=${currentAlbum}`);
+          const data = await res.json();
+          const song = await getMusicData(data.key, currentBase);
+          ap.list.add(song);
+        });
+      }
+    });
+  }
+}
+
 document.addEventListener("DOMContentLoaded", initBody);
 document.getElementById("search-btn").addEventListener("click", getMusic);
 document.getElementById("collections").addEventListener("click", openAlbums);
 document.querySelector("#comment-btn").addEventListener("click", handleComment);
+document.getElementById("open-search").addEventListener("click", openSearchBar);
 ap.on("play", updateTitle);
 ap.on("listswitch", updateTitle);
