@@ -148,7 +148,7 @@ async function handleComment() {
         alert("Please enter comment");
         return;
       }
-      commentText = commentArea.value;
+      const commentText = commentArea.value;
       commentArea.value = "";
       const newComment = await putComment(userName, commentText);
       commentContainer.innerHTML += `<p><b>${newComment.name}</b>: ${newComment.comment}</p>`;
