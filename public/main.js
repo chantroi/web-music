@@ -183,11 +183,10 @@ async function openSearchBar() {
       const data = await req.json();
       for (const item of data.videos) {
         const link = `https://www.youtube.com${item.url_suffix}`;
-        const itemElement = `<li class="search-item"><img class="item-thumbnail" src="${item.thumbnails[0]}" />${item.title}<button id="add-item" link="${link}"><i class="material-icons">add</i></button></li>`;
+        const itemElement = `<li class="search-item"><img class="item-thumbnail" src="${item.thumbnails[0]}" />${item.title}<button id="add-item"><i class="material-icons">add</i></button></li>`;
         searchResult.insertAdjacentHTML("beforeend", itemElement);
         const addBtn = searchResult.querySelector("#add-item");
         addBtn.addEventListener("click", async (e) => {
-          const link = e.target.getAttribute("link");
           const res = await fetch(`${API}/get?url=${link}&a=${currentAlbum}`);
           const data = await res.json();
           const song = await getMusicData(data.key, currentBase);
