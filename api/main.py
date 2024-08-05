@@ -56,7 +56,7 @@ def save_music(info, album):
 
 
 def ytsearch(kw: str):
-    results = YoutubeSearch(kw, max_results=5).to_json()
+    results = YoutubeSearch(kw, max_results=10).to_json()
     return json.loads(results)
 
 

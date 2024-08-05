@@ -165,12 +165,14 @@ async function openSearchBar() {
     const closeBtn = popup.querySelector("#close-btn");
     const searchBtn = popup.querySelector("#search-btn");
     const searchResult = popup.querySelector("#search-result");
+    const searchInput = popup.querySelector("#search-input");
     closeBtn.addEventListener("click", () => {
       popup.innerHTML = "";
       popup.close();
     });
 
     searchBtn.addEventListener("click", async (e) => {
+      searchResult.innerHTML = "";
       const req = await fetch(`${API}/search`, {
         method: "POST",
         headers: {
