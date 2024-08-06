@@ -158,7 +158,7 @@ async function openAlbumSelector() {
     popupElement.show();
     popupElement.innerHTML = `
       <button id="close-popup-btn">X</button>
-      <button id="create-album-btn">Tạo Album</button>
+      <button id="create-album-btn">Tạo danh sách mới</button>
       <ul id="album-list-container"></ul>
     `;
 
