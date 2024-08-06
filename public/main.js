@@ -195,7 +195,7 @@ async function selectAlbum(event) {
 }
 
 async function createNewAlbum() {
-  const albumName = prompt("Nhập tên album:");
+  const albumName = prompt("Nhập tên danh sách phát:");
   if (albumName) {
     showLoadingIndicator();
     try {
